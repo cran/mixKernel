@@ -1,0 +1,24 @@
+citHeader("To cite the 'mixKernel' package in publications, use:")
+
+year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
+vers = paste('R package version', meta$Version)
+
+citEntry(
+  entry = 'manual',
+  title = paste('mixKernel:', meta$Title),
+  author = as.person(meta$Author),
+  year = year,
+  note = vers,
+  textVersion = paste('Mariette J., Villa-Vialaneix N. (', year, ') mixKernel: ', meta$Title, '. ', vers, '.', sep = '')
+)
+
+citEntry(
+  entry = 'unpublished',
+  title = 'Integrating TARA Oceans datasets using unsupervised multiple kernel learning',
+  author = personList(as.person("Jerome Mariette"), as.person("Nathalie Villa-Vialaneix")),
+  note = 'Preprint',
+
+  textVersion = paste('Mariette, J. and Villa-Vialaneix, N. (2017)',
+                      'Integrating TARA Oceans datasets using unsupervised multiple kernel learning.',
+                      'Preprint.')
+)

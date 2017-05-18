@@ -1,0 +1,30 @@
+
+import(mixOmics, ggplot2)
+
+importFrom("utils", "browseURL")
+
+importFrom("graphics", "barplot")
+
+importFrom("phyloseq", "otu_table", "phyloseq", "distance")
+
+importFrom("corrplot", "corrplot")
+
+importFrom("psych", "tr")
+
+importFrom("stats", "reorder")
+
+importFrom("quadprog", "solve.QP")
+
+importFrom("LDRTools", "Pdist", "O2P")
+
+export(
+cim.kernel,
+combine.kernels,
+compute.kernel,
+kernel.pca.permute,
+kernel.pca,
+mixKernel.users.guide,
+plotVar.kernel.pca
+)
+
+S3method(plot, kernel.pca)

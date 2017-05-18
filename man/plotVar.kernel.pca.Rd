@@ -1,0 +1,53 @@
+\name{plotVar.kernel.pca}
+\alias{plotVar.kernel.pca}
+\title{Plot importance of variables in kernel PCA}
+
+\description{Provides a representation of variable importance in kernel PCA.}
+
+\usage{
+plotVar.kernel.pca(object, blocks = unique(object$cc.blocks), ndisplay = 5, ncol = 2, ...)
+}
+
+\arguments{
+\item{object}{: a kernel.pca object returned by \code{\link{kernel.pca}}.}
+\item{blocks}{a numerical vector indicating the block variables to display.}
+\item{ndisplay}{integer. The number of important variables per blocks shown in 
+the representation. Default: \code{5}.}
+\item{ncol}{integer. Each block of variables is displayed in a separate 
+subfigure. \code{ncol} sets the number of columns for the global figure. 
+Default: \code{2}.}
+\item{...}{external arguments.}
+}
+
+\details{
+\code{plotVar.kernel.pca} produces a barplot for each block. The variables for which the 
+importance has been computed with \code{\link{kernel.pca.permute}} are 
+displayed. The representation is limited to the \code{ndisplay} most important 
+variables.
+}
+
+\section{References}{
+Crone L. and Crosby D. (1995). Statistical applications of a metric on subspaces
+to satellite meteorology. \emph{Technometrics}, \bold{37}(3), 324-328.
+}
+
+\author{Jerome Mariette <jerome.mariette@inra.fr>
+
+Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inra.fr>}
+
+\seealso{
+\code{\link{kernel.pca}}, \code{\link{kernel.pca.permute}}
+}
+
+\examples{
+data(TARAoceans)
+
+# compute one kernel for the psychem dataset
+phychem.kernel <- compute.kernel(TARAoceans$phychem, kernel.func = "linear")
+# perform a KPCA
+kernel.pca.result <- kernel.pca(phychem.kernel)
+# compute importance for all variables in this kernel
+kernel.pca.result <- kernel.pca.permute(kernel.pca.result, phychem = colnames(TARAoceans$phychem))
+
+\dontrun{plotVar.kernel.pca(kernel.pca.result, ndisplay = 10)}
+}
