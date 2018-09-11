@@ -1,65 +1,47 @@
 ---
 title: "Data Integration using Unsupervised Multiple Kernel Learning"
+author: "Jérôme Mariette, Nathalie Villa-Vialaneix"
 date: "May 18th, 2017"
-author: Jérôme Mariette, Nathalie Villa-Vialaneix
 output:
   html_document:
     code_folding: show
     highlight: haddock
-    toc: yes
+    df_print: kable
 ---
 
 # Introduction
 
-The TARA Oceans expedition facilitated the study of plankton 
-communities by providing oceans metagenomic data combined with environmental 
-measures to the scientific community. This study focuses on 139 
-prokaryotic-enriched samples collected from 68 stations and spread across three
-depth layers: the surface (SRF), the deep chlorophyll maximum (DCM) layer and 
-the mesopelagic (MES) zones. Samples were located in 8 different oceans or seas:
-Indian Ocean (IO), Mediterranean Sea (MS), North Atlantic Ocean (NAO), North 
-Pacific Ocean (NPO), Red Sea (RS), South Atlantic Ocean (SAO), South Pacific 
-Ocean (SPO) and South Ocean (SO). 
+The TARA Oceans expedition facilitated the study of plankton communities by providing oceans metagenomic data combined with environmental measures to the scientific community. This study focuses on 139 prokaryotic-enriched samples collected from 68 stations and spread across three depth layers: the surface (SRF), the deep chlorophyll maximum (DCM) layer and the mesopelagic (MES) zones. Samples were located in 8 different oceans or seas: Indian Ocean (IO), Mediterranean Sea (MS), North Atlantic Ocean (NAO), North Pacific Ocean (NPO), Red Sea (RS), South Atlantic Ocean (SAO), South Pacific Ocean (SPO) and South Ocean (SO). 
 
-In this vignette, we consider a subset of the original data studied in the 
-reference article
+In this vignette, we consider a subset of the original data analysed in the [manuscript](http://biorxiv.org/content/early/2017/05/18/139287) from our collaborators Mariette & Villa-Vialaneix (INRA Toulouse, France).
 
-Mariette, J. and Villa-Vialaneix, N. (2017) Integrating TARA Oceans datasets
-using unsupervised multiple kernel learning. *Submitted for publication.*
+The data include 1% of the 35,650 prokaryotic OTUs and of the 39,246 bacterial genes that were randomly selected. **The aim is to integrate prokaryotic abundances and functional processes to environmental measure with an unsupervised method**.
 
-
-More precisely, only 1\% of the 35,650 prokaryotic OTUs and of the 39,246 
-bacterial genes were randomly selected. The aim of the study is to integrate 
-prokaryotic abundances and functional processes to environmental measure.
-
-To run this vignette, the latest version of [mixOmics](http://mixomics.org/) 
-must be previously installed.
+To run the following code, install the latest versions of [mixOmics](https://cran.r-project.org/package=mixOmics) and [phyloseq](https://www.bioconductor.org/packages/release/bioc/html/phyloseq.html).
 
 ```{r global_options, include=FALSE}
 library(knitr)
 knitr::opts_chunk$set(dpi = 100, echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-Install and load the mixOmics and mixKernel libraries (note that mixKernel will 
-soon be included in mixOmics!).
+Install and load the mixOmics and mixKernel libraries (note that mixKernel will soon be included in mixOmics!).
 
 ```{r load_lib}
-# install.package(mixKernel)
+# install.packages("mixKernel")
 library(mixOmics)
 library(mixKernel)
 ```
 
-# Loading TARA Ocean dataset
+# Loading TARA Ocean datasets
 
-Datasets (previously normalized) are provided as matrices with matching sample
-names (row names):
+The  (previously normalized) datasets are provided as matrices with matching sample names (rownames):
 
 ```{r input_data}
 data(TARAoceans)
 # more details with: ?TARAOceans
+# we check the dimension of the data:
 lapply(list("phychem" = TARAoceans$phychem, "pro.phylo" = TARAoceans$pro.phylo, 
-            "pro.NOGs" = TARAoceans$pro.NOGs),
-       dim)
+            "pro.NOGs" = TARAoceans$pro.NOGs), dim)
 ```
 
 
@@ -67,14 +49,9 @@ lapply(list("phychem" = TARAoceans$phychem, "pro.phylo" = TARAoceans$pro.phylo,
 
 ## Individual kernel computation
 
-For each input dataset, a kernel is computed using the function 
-```compute.kernel``` that allows to choose between linear, phylogenic or 
-abundance kernels. A user defined function can also be provided as input
-(argument ```kernel.func```, see ```?compute.kernel```).
+For each input dataset, a kernel is computed using the function ```compute.kernel``` with the choice of linear, phylogenic or abundance kernels. A user defined function can also be provided as input(argument ```kernel.func```, see ```?compute.kernel```).
 
-Returned objects are lists with a 'kernel' entry that stores
-the kernel matrix. The resulting kernels are squared symmetric matrices with a
-size equal to the number of observations (rows) in the input datasets.
+The results are lists with a 'kernel' entry that stores the kernel matrix. The resulting kernels are  symmetric matrices with a size equal to the number of observations (rows) in the input datasets.
 
 ```{r compute_kernel, echo=TRUE}
 phychem.kernel <- compute.kernel(TARAoceans$phychem, kernel.func = "linear")
@@ -82,12 +59,10 @@ pro.phylo.kernel <- compute.kernel(TARAoceans$pro.phylo, kernel.func = "abundanc
 pro.NOGs.kernel <- compute.kernel(TARAoceans$pro.NOGs, kernel.func = "abundance")
 
 # check dimensions
-dim(phychem.kernel)
+dim(pro.NOGs.kernel$kernel)
 ```
 
-A general overview of the correlation structure between datasets is obtained as
-described in (Mariette and Villa-Vialaneix, 2017) and displayed using the 
-function ```cim.kernel```:
+A general overview of the correlation structure between datasets is obtained as described in Mariette and Villa-Vialaneix (2017) and displayed using the function ```cim.kernel```:
 
 ```{r cim_kernel, fig.width=4}
 cim.kernel(phychem = phychem.kernel,
@@ -96,22 +71,14 @@ cim.kernel(phychem = phychem.kernel,
            method = "square")
 ```
 
-The figure shows that ```pro.phylo``` and ```pro.NOGs``` is the most correlated 
-pair of kernels. This result is expected as both kernels provide a summary of 
-prokaryotic communities.
+The figure shows that ```pro.phylo``` and ```pro.NOGs``` is the most correlated pair of kernels. This result is expected as both kernels provide a summary of prokaryotic communities.
 
 
 ## Combined kernel computation
 
-The function ```combine.kernels``` implements 3 different methods for combining
-kernels: STATIS-UMKL, sparse-UMKL and full-UMKL (see Mariette and 
-Villa-Vialaneix, 2017). It returns a meta-kernel that can be used as an input 
-for the function ```kernel.pca``` (kernel PCA). The three methods are 
-complementary and must be chosen according to the research question.
-The ```STATIS-UMKL``` approach gives an overview on the common information between the different 
-datasets. The ```full-UMKL``` computes a kernel that minimizes the distortion between all 
-input kernels. ```sparse-UMKL``` is a sparse variant of ```full-UMKL``` but also selects the most 
-relevant kernels.
+The function ```combine.kernels``` implements 3 different methods for combining kernels: STATIS-UMKL, sparse-UMKL and full-UMKL (see more details in Mariette and Villa-Vialaneix, 2017). It returns a meta-kernel that can be used as an input for the function ```kernel.pca``` (kernel PCA). The three methods bring complementary information and must be chosen according to the research question.
+
+The ```STATIS-UMKL``` approach gives an overview on the common information between the different datasets. The ```full-UMKL``` computes a kernel that minimizes the distortion between all input kernels. ```sparse-UMKL``` is a sparse variant of ```full-UMKL``` but also selects the most relevant kernels.
 
 ```{r meta_kernel}
 meta.kernel <- combine.kernels(phychem = phychem.kernel,
@@ -125,16 +92,13 @@ meta.kernel <- combine.kernels(phychem = phychem.kernel,
 
 ## Perform KPCA
 
-A kernel PCA can be performed from the combined kernel with the function 
-```kernel.pca```. The argument ```ncomp``` allows to choose how many axes are
-extracted by KPCA.
+A kernel PCA can be performed from the combined kernel with the function ```kernel.pca```. The argument ```ncomp``` allows to choose how many components to be extracted from KPCA.
 
 ```{r KPCA}
 kernel.pca.result <- kernel.pca(meta.kernel, ncomp = 10)
 ```
 
-Its results are displayed using the ```plotIndiv``` function from ```mixOmics```, 
-that provides the representation of individuals.
+Sample plots using the ```plotIndiv``` function from ```mixOmics```:
 
 ```{r plotIndiv_PCA, fig.keep='all'}
 all.depths <- levels(factor(TARAoceans$sample$depth))
@@ -154,31 +118,25 @@ plotIndiv(kernel.pca.result,
           legend.title.pch = "Depth")
 ```
 
-The explained variance supported by each axis of KPCA is displayed with the ```plot``` 
-function, and can help choosing the number of components in PCA.
+The explained variance supported by each axis of KPCA is displayed with the ```plot```  function, and can help choosing the number of components in KPCA.
 
 ```{r tune_pca}
 plot(kernel.pca.result)
 ```
 
-The first axis reproduces approximately 20\% of the total variance.
+The first axis summarises ~ 20% of the total variance.
 
 
-## Assess important variables
+## Assessing important variables
 
-The first axis is used to extract which variables are important. Variables 
-values are randomly permuted with the function ```permute.kernel.pca```. 
+Here we focus on the information summrised on the first component. Variables values are randomly permuted with the function ```permute.kernel.pca```. 
 
-In the following example, physical variable are permuted at the variable level
-(kernel ```phychem```), OTU abundances from ```pro.phylo``` kernel are 
-permuted at the phylum level (OTU phyla are stored in the second column, named
-```Phylum```, of the taxonomy annotation provided in ```TARAoceans``` object in
-the entry ```taxonomy```) and gene abundances from ```pro.NOGs``` are permuted
-at the GO level (GO are provided in the entry `GO` of the dataset).
+In the following example, physical variable are permuted at the variable level (kernel ```phychem```), OTU abundances from ```pro.phylo``` kernel are permuted at the phylum level (OTU phyla are stored in the second column, named ```Phylum```, of the taxonomy annotation provided in ```TARAoceans``` object in the entry ```taxonomy```) and gene abundances from ```pro.NOGs``` are permuted at the GO level (GO are provided in the entry `GO` of the dataset):
 
 ```{r permute_kpca}
 head(TARAoceans$taxonomy[ ,"Phylum"], 10)
 head(TARAoceans$GO, 10)
+# here we set a seed for reproducible results with this tutorial
 set.seed(17051753)
 kernel.pca.result <- kernel.pca.permute(kernel.pca.result, ncomp = 1,
                                         phychem = colnames(TARAoceans$phychem),
@@ -186,19 +144,15 @@ kernel.pca.result <- kernel.pca.permute(kernel.pca.result, ncomp = 1,
                                         pro.NOGs = TARAoceans$GO)
 ```
 
-Results are displayed with the function ```plotVar.kernel.pca```. The argument
-```ndisplay``` indicates the number of variables to display for each kernel:
+Results are displayed with the function ```plotVar.kernel.pca```. The argument ```ndisplay``` indicates the number of variables to display for each kernel:
 
 ```{r display_var}
 plotVar.kernel.pca(kernel.pca.result, ndisplay = 10, ncol = 3)
 ```
 
-```Proteobacteria``` is the most important variable for the ```pro.phylo```
-kernel. 
+```Proteobacteria``` is the most important variable for the ```pro.phylo``` kernel. 
 
-Then, the relative abundance of ```Proteobacteria``` is extracted in each of our
-`r nrow(TARAoceans$phychem)` samples, and each sample is colored according to
-the value of this variable in the KPCA projection plot:
+The relative abundance of ```Proteobacteria``` is then extracted in each of our `r nrow(TARAoceans$phychem)` samples, and each sample is colored according to the value of this variable in the KPCA projection plot:
 
 ```{r proteobacteria_display, fig.keep='all'}
 selected <- which(TARAoceans$taxonomy[ ,"Phylum"] == "Proteobacteria")
@@ -220,9 +174,7 @@ plotIndiv(kernel.pca.result,
           legend.title.pch = "Depth")
 ```
 
-Similarly, the temperature is the most important variable for the ```phychem```
-kernel. The temperature values can be displayed on the kernel PCA projection as
-follows:
+Similarly, the temperature is the most important variable for the ```phychem``` kernel. The temperature values can be displayed on the kernel PCA projection as follows:
 
 ```{r temperature_display, fig.keep='all'}
 col.temp <- colfunc(length(TARAoceans$phychem[ ,4]))
@@ -242,19 +194,14 @@ plotIndiv(kernel.pca.result,
 
 # References
 
-Mariette, J. and Villa-Vialaneix, N. (2017) Integrating TARA Oceans datasets
-using unsupervised multiple kernel learning. *Submitted for publication.*
+1. Mariette, J. and Villa-Vialaneix, N. (2017) Integrating TARA Oceans datasets using unsupervised multiple kernel learning. [bioRxiv 139287](http://biorxiv.org/content/early/2017/05/18/139287)
 
-Zhuang, J., Wang, J., Hoi, S., and Lan, X. (2011). Unsupervised multiple
-kernel clustering. Journal of Machine Learning Research: Workshop
-and Conference Proceedings, 20, 129–144.
+2. Zhuang, J., Wang, J., Hoi, S., and Lan, X. (2011). Unsupervised multiple kernel clustering. Journal of Machine Learning Research: Workshop and Conference Proceedings, 20, 129–144.
 
-Lavit, C., Escoufier, Y., Sabatier, R., and Traissac, P. (1994). The act
-(statis method). Computational Statistics & Data Analysis, 18(1), 97 – 119.
+3. Lavit, C., Escoufier, Y., Sabatier, R., and Traissac, P. (1994). The act (statis method). Computational Statistics & Data Analysis, 18(1), 97 – 119.
 
 # Session information
 
 ```{r session_information}
 sessionInfo()
 ```
-

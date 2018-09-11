@@ -30,7 +30,8 @@ plot.kernel.pca <- function(x, ncomp = min(10, x$ncomp), ...) {
   #-- checking general input parameters --#
 
   if (!"kernel.pca" %in% class(x)) {
-  	stop("'x' should be an instance of 'kernel.pca' object returned by the kernel.pca function.", call. = FALSE)
+  	stop("'x' should be an instance of 'kernel.pca' object returned by the",
+  	     " kernel.pca function.", call. = FALSE)
   }
     
   #-- ncomp
@@ -41,7 +42,8 @@ plot.kernel.pca <- function(x, ncomp = min(10, x$ncomp), ...) {
   	stop("'ncomp' must be lower or equal than ", length(x$sdev), ".", call. = FALSE)
   }
   
-  barplot(x$explained_variance[1:ncomp], names.arg = seq(1, ncomp), xlab = "Principal Components", ylab = "Explained Variance", ...)
+  barplot(x$explained_variance[1:ncomp], names.arg = seq(1, ncomp), 
+          xlab = "Principal Components", ylab = "Explained Variance", ...)
     
 }
 

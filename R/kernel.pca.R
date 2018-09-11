@@ -50,6 +50,9 @@ kernel.pca <- function(K, ncomp = nrow(K$kernel)) {
   #-- compute eigenvectors ---------------#
   # eigen.result <- eigen(X.centered/m, symmetric=TRUE)
   eigen.result <- eigen(X.centered, symmetric = TRUE)
+  # tolerance is used to solve numeric instabilities
+  tolerance=10^(-10)
+  eigen.result$values <- round(eigen.result$values, -log10(tolerance))
   pcv <- t(t(eigen.result$vectors[,1:ncomp]) / sqrt(eigen.result$values[1:ncomp]))
   colnames(pcv) <- c(1:ncomp)
   rownames(pcv) <- samples.names

@@ -14,33 +14,39 @@ compute.kernel(X, kernel.func = "linear", ..., test.pos.semidef = FALSE)
 \item{kernel.func}{the kernel function to use. This parameter can be set to any
 user defined kernel function. Widely used kernel functions are pre-implemented,
 that can be used by setting \code{kernel.func} to one of the following strings:
-\code{"kidentity"}, \code{"abundance"}, \code{"linear"} or 
-\code{"phylogenetic"}. Default: \code{"linear"}.}
+\code{"kidentity"}, \code{"abundance"}, \code{"linear"}, 
+\code{"gaussian.radial.basis"}, \code{"poisson"} or \code{"phylogenetic"}. 
+Default: \code{"linear"}.}
 \item{...}{the kernel function arguments. Valid parameters for pre-implemented 
 kernels are: 
 \itemize{
-  \item \code{phylogenetic.tree}(\code{"phylogenetic"}) an instance of 
+  \item \code{phylogenetic.tree} (\code{"phylogenetic"}): an instance of 
   phylo-class that contains a phylogenetic tree (required).
-  \item \code{scale} (\code{"linear"}): logical. Should the variables be 
-  scaled to unit variance prior the kernel computation? Default: \code{TRUE}.
-  \item \code{method}(\code{"phylogenetic"} or 
-  computing the kernel? Can be \code{"unifrac"} or \code{"wunifrac"} for
-  \code{"abundance"}): character. Which dissimilarity to use for 
-  \code{"phylogenetic"} and one of \code{"bray"},
+  \item \code{scale} (\code{"linear"} or \code{"gaussian.radial.basis"}): 
+  logical. Should the variables be scaled to unit variance prior the kernel 
+  computation? Default: \code{TRUE}.
+  \item \code{sigma} (\code{"gaussian.radial.basis"}): double. The inverse 
+  kernel width used by \code{"gaussian.radial.basis"}.
+  \item \code{method} (\code{"phylogenetic"} or \code{"abundance"}): character.
+  Can be \code{"unifrac"} or \code{"wunifrac"} for \code{"phylogenetic"}. Which 
+  dissimilarity to use for \code{"abundance"}: one of \code{"bray"},
   \code{"euclidean"}, \code{"canberra"}, \code{"manhattan"}, \code{"kulczynski"}, 
   \code{"jaccard"}, \code{"gower"}, \code{"altGower"}, \code{"morisita"},
   \code{"horn"}, \code{"mountford"}, \code{"raup"}, \code{"binomial"}, 
-  \code{"chao"} and \code{"cao"} for \code{"abundance"}.}
+  \code{"chao"} and \code{"cao"}.
+  \item \code{normalization} (\code{"poisson"}): character. Can be \code{"deseq"}
+  (more robust), \code{"mle"} (less robust) or \code{"quantile"}.}
 }
-\item{test.pos.semidef}{boleean. If \code{test.pos.semidef = TRUE}, the resulting
-matrix is tested to be positive-semidefinite.}
+\item{test.pos.semidef}{boleean. If \code{test.pos.semidef = TRUE}, the 
+resulting matrix is tested to be positive-semidefinite.}
 }
 
 \value{
 \code{compute.kernel} returns an object of classes \code{"kernel"}, a list that 
 contains the following components:
   \item{kernel}{: the computed kernel matrix.}
-  \item{X}{: the original dataset. If \code{"kidentity"}, \code{X} is set to \code{NULL}.}
+  \item{X}{: the original dataset. If \code{"kidentity"}, \code{X} is set to 
+  \code{NULL}.}
   \item{kernel.func}{: the kernel function used.}
   \item{kernel.args}{: the arguments used to compute the kernel.} 
 }
@@ -54,6 +60,9 @@ Lozupone C., Hamady M., Kelley S.T. and Knight R. (2007). Quantitative and
 qualitative beta diversity measures lead to different insights into factors that
 structure microbial communities. \emph{Applied and Environmental Microbiology}, 
 \bold{73}(5), 1576-1585.
+
+Witten D. (2011). Classification and clustering of sequencing data using a 
+Poisson model. \emph{Annals of Applied Statistics}, \bold{5}(4), 2493-2518.
 }
 
 \author{Jerome Mariette <jerome.mariette@inra.fr>

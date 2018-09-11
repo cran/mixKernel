@@ -1,11 +1,12 @@
 Package: mixKernel
 Type: Package
 Title: Omics Data Integration Using Kernel Methods
-Version: 0.1
-Date: 2017-05-17
+Version: 0.2
+Date: 2018-09-11
 Depends: R (>= 2.10), mixOmics, ggplot2
-Imports: phyloseq, corrplot, psych, quadprog, LDRTools
-Author: c(person("Jerome", "Mariette", role = c("aut", "cre"), email="jerome.mariette@inra.fr"),
+Imports: vegan, phyloseq, corrplot, psych, quadprog, LDRTools, Matrix,
+        methods
+Authors@R: c(person("Jerome", "Mariette", role = c("aut", "cre"), email="jerome.mariette@inra.fr"),
           person("Nathalie", "Villa-Vialaneix", role = c("aut"), email="nathalie.villa-vialaneix@inra.fr"))
 Maintainer: Jerome Mariette <jerome.mariette@inra.fr>
 Description: Kernel-based methods are powerful methods for integrating 
@@ -18,7 +19,9 @@ Description: Kernel-based methods are powerful methods for integrating
     important variables are also provided in the package. 
 License: GPL (>= 2)
 Repository: CRAN
-Date/Publication: 2017-05-18 03:50:57 UTC
-Packaged: 2017-05-17 08:00:43 UTC; jmariette
+Date/Publication: 2018-09-11 14:50:03 UTC
+Packaged: 2018-09-11 13:49:43 UTC; jmariette
 NeedsCompilation: no
 LazyData: true
+Author: Jerome Mariette [aut, cre],
+  Nathalie Villa-Vialaneix [aut]

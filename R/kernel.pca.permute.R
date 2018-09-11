@@ -29,11 +29,13 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   blocks <- names(permutations)
   
   if (!"kernel.pca" %in% class(kpca.result)) {
-    stop("'kpca.result' should be an instance of 'kernel.pca' object returned by the kernel.pca function.", call. = FALSE)
+    stop(paste0("'kpca.result' should be an instance of 'kernel.pca' object", 
+                " returned by the kernel.pca function."), call. = FALSE)
   }
   
   if (length(blocks) == 0) {
-    stop("At least permutation variables of 1 block should be provided.", call. = FALSE)
+    stop("At least permutation variables of 1 block should be provided.", 
+         call. = FALSE)
   }
   
   # it the kpca has been performed on a meta kernel
@@ -43,29 +45,40 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
     # test if there is no kidentity kernels, i.e. kernel with X = NULL
     sapply(blocks, function(b.label) {
       if (is.null(kpca.result$kernel$X[[b.label]]$X)) {
-        stop(paste0("No permutation can be done on block '", b.label, "' as there is no dataset available for this block in the 'kpca.result' object."), call. = FALSE)
+        stop(paste0("No permutation can be done on block '", b.label, 
+                    "' as there is no dataset available for this block in the",
+                    " 'kpca.result' object."), call. = FALSE)
       }
     })
     sapply(blocks, function(b.label) {
       if (!b.label %in% names(kpca.result$kernel$X)) {
-        stop(paste0("Block '", b.label, "' does not exists as a block in the 'kpca.result' object."), call. = FALSE)
+        stop(paste0("Block '", b.label, "' does not exists as a block in the ",
+                    "'kpca.result' object."), call. = FALSE)
       }
     })
     sapply(blocks, function(b.label) {
       if (!ncol(kpca.result$kernel$X[[b.label]]$X) == length(permutations[[b.label]])) {
-        stop(paste0("'permutations' vector length for block '", b.label, "' should be equal to the number of variables in '", b.label, "' dataset: ", ncol(kpca.result$kernel$X[[b.label]]$X), "."), call. = FALSE)
+        stop(paste0("'permutations' vector length for block '", b.label, 
+                    "' should be equal to the number of variables in '", 
+                    b.label, "' dataset: ", 
+                    ncol(kpca.result$kernel$X[[b.label]]$X), "."), call. = FALSE)
       }
     })
   } else {
     # test if there its a kidentity kernel, i.e. kernel with X = NULL
     if (is.null(kpca.result$kernel$X)) {
-      stop(paste0("No permutation can be done as no dataset is available in 'kpca.result' object."), call. = FALSE)
+      stop(paste0("No permutation can be done as no dataset is available in ",
+                  "'kpca.result' object."), call. = FALSE)
     }
     if (length(blocks) > 1) {
-      stop(paste0("Only 1 'permutations' vector should be provided as the kernel.pca has been performed on a single kernel."), call. = FALSE)
+      stop(paste0("Only 1 'permutations' vector should be provided as the ",
+                  "kernel.pca has been performed on a single kernel."), 
+           call. = FALSE)
     }
   	if (!ncol(kpca.result$kernel$X) == length(permutations[[1]])) {
-  	  stop(paste0("'permutations' vector length should be equal to the number of variables in the input dataset: ", ncol(kpca.result$kernel$X), "."), call. = FALSE)
+  	  stop(paste0("'permutations' vector length should be equal to the number ",
+  	              "of variables in the input dataset: ", 
+  	              ncol(kpca.result$kernel$X), "."), call. = FALSE)
   	}
   }
   
@@ -74,6 +87,14 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   }
   if (ncomp > kpca.result$ncomp) {
   	ncomp <- kpca.result$ncomp
+  }
+  
+  # test if variables to permute are unique
+  for (block in blocks) {
+    if (!length(as.vector(unique(permutations[[block]]))) == length(as.vector(permutations[[block]]))) {
+      stop(paste0("Duplicated variable in block '",
+                  block, "'."), call. = FALSE)
+    }
   }
   
   #-- make permutations ------------------#
@@ -101,8 +122,9 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
           }
   
           # if the directory parameter is set, try to load the permuted kernel
-          if (!is.null(directory) && file.exists(file.path(directory, paste0(variable, ".rds")))) {
-            kernel.permuted <- readRDS(file.path(directory, paste0(variable, ".rds")))
+          f.path <- file.path(directory, paste0(variable, ".rds"))
+          if (!is.null(directory) && file.exists(f.path)) {
+            kernel.permuted <- readRDS(f.path)
           } else {
             # recompute the kernel
   
@@ -112,7 +134,7 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
             kernel.permuted <- do.call("compute.kernel", compute.args)
   
             if (!is.null(directory)) {
-              saveRDS(kernel.permuted, file.path(directory, paste0(variable, ".rds")))
+              saveRDS(kernel.permuted, f.path)
             }
           }
   
@@ -123,12 +145,16 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
           all.kernels[[block]] <- kernel.permuted
   
           all.kernels.scaled <- lapply (all.kernels, function(x) {
-            x.cosinus <- sweep(sweep(x$kernel, 2, sqrt(diag(x$kernel)), "/"), 1, sqrt(diag(x$kernel)), "/")
-            t(t(x.cosinus - colSums(x.cosinus) / nrow(x.cosinus)) -  rowSums(x.cosinus) / nrow(x.cosinus)) + sum(x.cosinus) / nrow(x.cosinus)^2
+            x.cosinus <- sweep(sweep(x$kernel, 2, sqrt(diag(x$kernel)), "/"), 1, 
+                               sqrt(diag(x$kernel)), "/")
+            t(t(x.cosinus - colSums(x.cosinus) / nrow(x.cosinus)) - 
+                rowSums(x.cosinus) / nrow(x.cosinus)) + sum(x.cosinus) / 
+              nrow(x.cosinus)^2
           })
   
           # compute the new meta.kernel with permuted variables
-          meta.kernel.permuted <- lapply(as.list(1:length(all.kernels.scaled)), function(x) {
+          meta.kernel.permuted <- lapply(as.list(1:length(all.kernels.scaled)), 
+                                         function(x) {
             all.kernels.scaled[[x]] * kpca.result$kernel$weights[x]
           })
           meta.kernel.permuted <- Reduce("+", meta.kernel.permuted)
@@ -146,14 +172,16 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   
           # compute the crone and crosby distance
           pdist <- Pdist(list(O2P(kpca.result$x[,1:ncomp]),
-                              O2P(kpca.permuted$x[,1:ncomp])), weights = "constant")
+                              O2P(kpca.permuted$x[,1:ncomp])), 
+                         weights = "constant")
           
           all.pdist <- c(all.pdist, pdist)
           all.variable <- c(all.variable, variable)
           all.block <- c(all.block, block)
   
         } else {
-          stop(paste0("'", variable, "'", "variable has already been permuted for this kernel.pca object!"))
+          stop(paste0("'", variable, "'", "variable has already been permuted",
+                      " for this kernel.pca object!"))
         }
   
       }

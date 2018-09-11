@@ -21,7 +21,9 @@
 #############################################################################################################
 
 
-cim.kernel <- function(..., scale = TRUE, method = c("circle", "square", "number", "shade", "color", "pie")) {
+cim.kernel <- function(..., scale = TRUE, 
+                       method = c("circle", "square", "number", 
+                                  "shade", "color", "pie")) {
   
   #-- checking general input parameters --#
   
@@ -65,14 +67,16 @@ cim.kernel <- function(..., scale = TRUE, method = c("circle", "square", "number
   
   #-- STATIS similarities ----------------#
   
-  similarities <- outer(1:length(K.scaled), 1:length(K.scaled), FUN = Vectorize(function(i, j) {
+  similarities <- outer(1:length(K.scaled), 1:length(K.scaled), 
+                        FUN = Vectorize(function(i, j) {
     out <- tr(K.scaled[[i]] %*% K.scaled[[j]]) 
     out <- out / (norm(K.scaled[[i]], type="F") * norm(K.scaled[[j]], type="F"))
     return(out)
   }))
   
   rownames(similarities) <- colnames(similarities) <- names(K)
-  corrplot(similarities, type = "full", tl.col = "black", tl.srt = 45, method = method)
+  corrplot(similarities, type = "full", tl.col = "black", 
+           tl.srt = 45, method = method)
   return(invisible(similarities))
   
 }

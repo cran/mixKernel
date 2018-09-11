@@ -3,19 +3,25 @@ import(mixOmics, ggplot2)
 
 importFrom("utils", "browseURL")
 
+importFrom("methods", "is")
+
 importFrom("graphics", "barplot")
 
 importFrom("phyloseq", "otu_table", "phyloseq", "distance")
+
+importFrom("vegan", "vegdist")
 
 importFrom("corrplot", "corrplot")
 
 importFrom("psych", "tr")
 
-importFrom("stats", "reorder")
+importFrom("stats", "reorder", "quantile", "median", "as.dist")
 
 importFrom("quadprog", "solve.QP")
 
 importFrom("LDRTools", "Pdist", "O2P")
+
+importFrom("Matrix", "forceSymmetric")
 
 export(
 cim.kernel,

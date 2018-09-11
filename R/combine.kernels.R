@@ -60,8 +60,10 @@ combine.kernels <- function(..., scale = TRUE,
   #-- cosinus scaling --------------------#
   if (scale) {
     X.scaled <- lapply (X, function(x) {
-      x.cosinus <- sweep(sweep(x$kernel, 2, sqrt(diag(x$kernel)), "/"), 1, sqrt(diag(x$kernel)), "/")
-      t(t(x.cosinus - colSums(x.cosinus) / nrow(x.cosinus)) - rowSums(x.cosinus) / nrow(x.cosinus)) + sum(x.cosinus) / nrow(x.cosinus)^2
+      x.cosinus <- sweep(sweep(x$kernel, 2, sqrt(diag(x$kernel)), "/"), 
+                         1, sqrt(diag(x$kernel)), "/")
+      t(t(x.cosinus - colSums(x.cosinus) / nrow(x.cosinus)) - rowSums(x.cosinus) / 
+          nrow(x.cosinus)) + sum(x.cosinus) / nrow(x.cosinus)^2
     })
   } else {
     X.scaled <- X
@@ -72,8 +74,10 @@ combine.kernels <- function(..., scale = TRUE,
   beta <- 1 / length(X.scaled)
   if (method == 'STATIS-UMKL') {
     
-    similarities <- outer(1:length(X.scaled), 1:length(X.scaled), FUN=Vectorize(function(i, j) {
-      tr(X.scaled[[i]] %*% X.scaled[[j]]) / (norm(X.scaled[[i]], type="F") * norm(X.scaled[[j]], type="F"))
+    similarities <- outer(1:length(X.scaled), 1:length(X.scaled), 
+                          FUN = Vectorize(function(i, j) {
+      tr(X.scaled[[i]] %*% X.scaled[[j]]) / (norm(X.scaled[[i]], type="F") * 
+                                               norm(X.scaled[[j]], type="F"))
     }))
     weights <- eigen(similarities, symmetric = TRUE)$vectors[ ,1]
     weights <- weights / sum(weights)
@@ -106,7 +110,8 @@ combine.kernels <- function(..., scale = TRUE,
     #     }))
     #   })
     # })
-    C.matrix <- outer(1:length(X.scaled), 1:length(X.scaled), FUN=Vectorize(function(i, j) {
+    C.matrix <- outer(1:length(X.scaled), 1:length(X.scaled), 
+                      FUN = Vectorize(function(i, j) {
       sum(graph.weights * apply(X.scaled[[i]], 1, function(rowi) {
         apply(X.scaled[[i]], 1, function(rowj) {
           sum(abs(rowi-rowj))
@@ -123,7 +128,8 @@ combine.kernels <- function(..., scale = TRUE,
       
       dvec <- rep(0, length(X.scaled))
       # cosinus normalization
-      C.matrix.n <- sweep(sweep(C.matrix, 2, sqrt(diag(C.matrix)), "/"), 1, sqrt(diag(C.matrix)), "/")
+      C.matrix.n <- sweep(sweep(C.matrix, 2, sqrt(diag(C.matrix)), "/"), 1, 
+                          sqrt(diag(C.matrix)), "/")
       # frobenius normalization
       # C.matrix.n <- C.matrix / norm(C.matrix, type="F")
       Dmat <- 2 * C.matrix.n
@@ -140,7 +146,8 @@ combine.kernels <- function(..., scale = TRUE,
       Y <- rep(0,length(X.scaled))
       threshold <- 10^(-2)
       # cosinus normalization
-      C.matrix.n <- sweep(sweep(C.matrix, 2, sqrt(diag(C.matrix)), "/"), 1, sqrt(diag(C.matrix)), "/")
+      C.matrix.n <- sweep(sweep(C.matrix, 2, sqrt(diag(C.matrix)), "/"), 1, 
+                          sqrt(diag(C.matrix)), "/")
       # frobenius normalization
       # C.matrix.n <- C.matrix / norm(C.matrix, type="F")
       Dmat <- C.matrix.n + diag(rho/2, ncol=length(X.scaled), nrow=length(X.scaled))

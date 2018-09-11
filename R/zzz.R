@@ -21,9 +21,12 @@
 #############################################################################################################
 
 
-.onAttach <- function(libname, pkgname){ packageStartupMessage("\nmixKernel will soon be included in the mixOmics package",
-    
+.onAttach <- function(libname, pkgname) {
+  
+  packageStartupMessage("\nmixKernel will soon be included in the mixOmics package",
     "\n\nVisit http://www.mixOmics.org for a tutorial to use our method.",
-    "\nAny bug reports or comments? Notify us at jerome.mariette@inra.fr or https://bitbucket.org/klecao/package-mixomics/issues"
-    
-    )}
+    "\nAny bug reports or comments? Notify us at jerome.mariette@inra.fr",
+    " or https://bitbucket.org/klecao/package-mixomics/issues"
+  )
+  
+}
