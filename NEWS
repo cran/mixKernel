@@ -1,4 +1,9 @@
 ********************************************************************************
+mixKernel 0.3 [2018-11-26]
+Fixed bugs:
+  fix a bug in kernel.pca.permute with duplicated block variables (reported by Devin Leopold)
+
+********************************************************************************
 mixKernel 0.2 [2017-10-17]
 New options:
   Additional kernels          : gaussian.radial.basis, poisson

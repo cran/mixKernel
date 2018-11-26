@@ -89,14 +89,6 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   	ncomp <- kpca.result$ncomp
   }
   
-  # test if variables to permute are unique
-  for (block in blocks) {
-    if (!length(as.vector(unique(permutations[[block]]))) == length(as.vector(permutations[[block]]))) {
-      stop(paste0("Duplicated variable in block '",
-                  block, "'."), call. = FALSE)
-    }
-  }
-  
   #-- make permutations ------------------#
 
   all.pdist <- all.variable <- all.block <- c()

@@ -1,11 +1,11 @@
-6524d6d9a93b353d91f0b03853ac6b99 *DESCRIPTION
+3443067fb03f40a55f518e9709d98b9b *DESCRIPTION
 636ba3b105c54c1a422295834f5110cb *NAMESPACE
-642dca4688d5c53d183f76215824968c *NEWS
+680f10f03ecaa882dfc260a17b7b1cb1 *NEWS
 caec4d9d413c791aa878f9c10f900956 *R/cim.kernel.R
 5cc21e22392ddd003ba84cd9d47d258c *R/combine.kernels.R
 2eb68640e8c5d08a94f8c68a0726df4b *R/compute.kernel.R
 20c6e1994379ef1e4943925f4c28c8c5 *R/kernel.pca.R
-120d7cf0f91f3d996f991accc09fafe7 *R/kernel.pca.permute.R
+cd09ae955f5bc26d2b73c7385dba62e8 *R/kernel.pca.permute.R
 4ac5103013a43817d6248ec2b816bb49 *R/kernels.R
 049746291c1e1677a328aa82cd57915d *R/plot.kernel.pca.R
 7c2f33cc0bc2424ac4a34fe4d4722412 *R/plotVar.kernel.pca.R
