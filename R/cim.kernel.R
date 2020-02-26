@@ -77,6 +77,7 @@ cim.kernel <- function(..., scale = TRUE,
   rownames(similarities) <- colnames(similarities) <- names(K)
   corrplot(similarities, type = "full", tl.col = "black", 
            tl.srt = 45, method = method)
+  # corrplot.mixed(similarities, upper = method, cl.lim = c(0, 1))
   return(invisible(similarities))
   
 }

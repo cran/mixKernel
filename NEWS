@@ -1,4 +1,10 @@
 ********************************************************************************
+mixKernel 0.4 [2020-02-20]
+New function:
+  the ukfs function has been added. This function aims at selecting relevant 
+  variables using unsupervised kernel method
+
+********************************************************************************
 mixKernel 0.3 [2018-11-26]
 Fixed bugs:
   fix a bug in kernel.pca.permute with duplicated block variables (reported by Devin Leopold)

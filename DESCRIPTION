@@ -1,15 +1,16 @@
 Package: mixKernel
 Type: Package
 Title: Omics Data Integration Using Kernel Methods
-Version: 0.3
-Date: 2018-11-26
-Depends: R (>= 2.10), mixOmics, ggplot2
+Version: 0.4
+Date: 2020-02-20
+Depends: R (>= 3.5.0), mixOmics, ggplot2, reticulate (>= 1.14)
 Imports: vegan, phyloseq, corrplot, psych, quadprog, LDRTools, Matrix,
         methods
-Authors@R: c(
-	person("Jerome", "Mariette", role = c("aut", "cre"), email="jerome.mariette@inra.fr"),
-	person("Nathalie", "Villa-Vialaneix", role = c("aut"), email="nathalie.villa-vialaneix@inra.fr"))
-Maintainer: Jerome Mariette <jerome.mariette@inra.fr>
+Authors@R: c(person("Jerome", "Mariette", role = c("aut", "cre"), email="jerome.mariette@inrae.fr"),
+             person("Celine", "Brouard", role = c("aut"), email="celine.brouard@inrae.fr"),
+             person("Remi", "Flamary", role = c("aut"), email="remi.flamary@unice.fr"),
+             person("Nathalie", "Vialaneix", role = c("aut"), email="nathalie.vialaneix@inrae.fr"))
+Maintainer: Jerome Mariette <jerome.mariette@inrae.fr>
 Description: Kernel-based methods are powerful methods for integrating 
     heterogeneous types of data. mixKernel aims at providing methods to combine
     kernel for unsupervised exploratory analysis. Different solutions are 
@@ -21,9 +22,14 @@ Description: Kernel-based methods are powerful methods for integrating
     Nathalie Villa-Vialaneix (2017) <doi:10.1093/bioinformatics/btx682>.
 License: GPL (>= 2)
 Repository: CRAN
-Date/Publication: 2018-11-26 11:00:08 UTC
-Packaged: 2018-11-26 10:51:43 UTC; jmariette
-Author: Jerome Mariette [aut, cre],
-  Nathalie Villa-Vialaneix [aut]
+Date/Publication: 2020-02-26 12:50:06 UTC
+Packaged: 2020-02-25 16:09:27 UTC; jmariette
 NeedsCompilation: no
 LazyData: true
+Config/reticulate: list( packages = list( list(package = "autograd",
+        pip = TRUE), list(package = "numpy", pip = TRUE), list(package
+        = "scipy", pip = TRUE) ) )
+Author: Jerome Mariette [aut, cre],
+  Celine Brouard [aut],
+  Remi Flamary [aut],
+  Nathalie Vialaneix [aut]

@@ -25,7 +25,7 @@
   
   packageStartupMessage("\nmixKernel will soon be included in the mixOmics package",
     "\n\nVisit http://www.mixOmics.org for a tutorial to use our method.",
-    "\nAny bug reports or comments? Notify us at jerome.mariette@inra.fr",
+    "\nAny bug reports or comments? Notify us at jerome.mariette@inrae.fr",
     " or https://bitbucket.org/klecao/package-mixomics/issues"
   )
   

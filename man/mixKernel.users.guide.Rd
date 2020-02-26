@@ -28,9 +28,9 @@ given by \code{Sys.getenv("R_BROWSER")}. The HTML viewer can be changed using
  \code{Sys.setenv(R_BROWSER = )}.
 }
 
-\author{Jerome Mariette <jerome.mariette@inra.fr>
+\author{Jerome Mariette <jerome.mariette@inrae.fr>
 
-Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inra.fr>}
+Nathalie Vialaneix <nathalie.vialaneix@inrae.fr>}
 
 \examples{
 mixKernel.users.guide(view = FALSE)

@@ -43,9 +43,9 @@ Mariette J. and Villa-Vialaneix N. (2017). Integrating \emph{TARA} Oceans
 datasets using unsupervised multiple kernel learning. \emph{Preprint}
 }
 
-\author{Jerome Mariette <jerome.mariette@inra.fr>
+\author{Jerome Mariette <jerome.mariette@inrae.fr>
 
-Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inra.fr>}
+Nathalie Vialaneix <nathalie.vialaneix@inrae.fr>}
 
 \seealso{\code{\link{compute.kernel}}}
 

@@ -31,9 +31,9 @@ Scholkopf B., Smola A. and Muller K.R. (1998) Nonlinear component analysis as a
 kernel eigenvalue problem. \emph{Neural Computation}, \bold{10}, 1299-1319.
 }
 
-\author{Jerome Mariette <jerome.mariette@inra.fr>
+\author{Jerome Mariette <jerome.mariette@inrae.fr>
 
-Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inra.fr>}
+Nathalie Vialaneix <nathalie.vialaneix@inrae.fr>}
 
 \seealso{
 \code{\link{compute.kernel}}, \code{\link{combine.kernels}}

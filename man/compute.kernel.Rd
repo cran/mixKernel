@@ -65,9 +65,9 @@ Witten D. (2011). Classification and clustering of sequencing data using a
 Poisson model. \emph{Annals of Applied Statistics}, \bold{5}(4), 2493-2518.
 }
 
-\author{Jerome Mariette <jerome.mariette@inra.fr>
+\author{Jerome Mariette <jerome.mariette@inrae.fr>
 
-Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inra.fr>}
+Nathalie Vialaneix <nathalie.vialaneix@inrae.fr>}
 
 \seealso{
 \code{\link{combine.kernels}}, \code{\link{kernel.pca}}

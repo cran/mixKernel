@@ -1,5 +1,5 @@
 
-import(mixOmics, ggplot2)
+import(mixOmics, ggplot2, reticulate)
 
 importFrom("utils", "browseURL")
 
@@ -30,7 +30,8 @@ compute.kernel,
 kernel.pca.permute,
 kernel.pca,
 mixKernel.users.guide,
-plotVar.kernel.pca
+plotVar.kernel.pca,
+ukfs
 )
 
 S3method(plot, kernel.pca)

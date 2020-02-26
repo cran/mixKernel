@@ -37,9 +37,9 @@ Crone L. and Crosby D. (1995). Statistical applications of a metric on subspaces
 to satellite meteorology. \emph{Technometrics}, \bold{37}(3), 324-328.
 }
 
-\author{Jerome Mariette <jerome.mariette@inra.fr>
+\author{Jerome Mariette <jerome.mariette@inrae.fr>
 
-Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inra.fr>}
+Nathalie Vialaneix <nathalie.vialaneix@inrae.fr>}
 
 \seealso{\code{\link{compute.kernel}}, \code{\link{kernel.pca}}, 
 \code{\link{plotVar.kernel.pca}}}
