@@ -39,8 +39,8 @@ Lavit C., Escoufier Y., Sabatier R. and Traissac P. (1994). The ACT (STATIS
 method). \emph{Computational Statistics and Data Analysis}, \bold{18}(1), 
 97-119.
 
-Mariette J. and Villa-Vialaneix N. (2017). Integrating \emph{TARA} Oceans 
-datasets using unsupervised multiple kernel learning. \emph{Preprint}
+Mariette J. and Villa-Vialaneix N. (2018). Unsupervised multiple kernel learning
+for heterogeneous data integration. \emph{Bioinformatics}, \bold{34}(6), 1009-1015.
 }
 
 \author{Jerome Mariette <jerome.mariette@inrae.fr>

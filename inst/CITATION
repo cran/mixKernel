@@ -13,12 +13,15 @@ citEntry(
 )
 
 citEntry(
-  entry = 'unpublished',
-  title = 'Integrating TARA Oceans datasets using unsupervised multiple kernel learning',
+  entry = 'article',
+  title = 'Unsupervised multiple kernel learning for heterogeneous data integration',
   author = personList(as.person("Jerome Mariette"), as.person("Nathalie Villa-Vialaneix")),
-  note = 'Preprint',
-
+  journal = 'Bioinformatics',
+  year = 2018,
+  volume = '34',
+  issue = '6',
+  pages = '1009-1015',
   textVersion = paste('Mariette, J. and Villa-Vialaneix, N. (2017)',
-                      'Integrating TARA Oceans datasets using unsupervised multiple kernel learning.',
-                      'Preprint.')
+                      'Unsupervised multiple kernel learning for heterogeneous data integration.',
+                      'Bioinformatics, 34(6): 1009-1015.')
 )

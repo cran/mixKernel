@@ -1,7 +1,7 @@
 #############################################################################################################
 # Author :
 #   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Villa-Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
+#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
 #
 # Copyright (C) 2017
 #
@@ -23,10 +23,8 @@
 
 .onAttach <- function(libname, pkgname) {
   
-  packageStartupMessage("\nmixKernel will soon be included in the mixOmics package",
-    "\n\nVisit http://www.mixOmics.org for a tutorial to use our method.",
-    "\nAny bug reports or comments? Notify us at jerome.mariette@inrae.fr",
-    " or https://bitbucket.org/klecao/package-mixomics/issues"
+  packageStartupMessage("\nAny bug reports or comments? Notify us at jerome.mariette@inrae.fr",
+    " or https://forgemia.inra.fr/jerome.mariette/mixKernel/-/issues"
   )
   
 }

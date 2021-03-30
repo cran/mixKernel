@@ -30,8 +30,8 @@ results and add values in the three entries: \code{cc.distances},
 \code{cc.variables} and \code{cc.blocks}.}
 
 \section{References}{
-Mariette J. and Villa-Vialaneix N. (2017). Integrating \emph{TARA} Oceans 
-datasets using unsupervised multiple kernel learning. \emph{Preprint}
+Mariette J. and Villa-Vialaneix N. (2018). Unsupervised multiple kernel learning
+for heterogeneous data integration. \emph{Bioinformatics}, \bold{34}(6), 1009-1015.
 
 Crone L. and Crosby D. (1995). Statistical applications of a metric on subspaces
 to satellite meteorology. \emph{Technometrics}, \bold{37}(3), 324-328.

@@ -1,4 +1,10 @@
 ********************************************************************************
+mixKernel 0.5 [2021-03-1]
+New function:
+  the select.features function has been added. This function replace the ukfs function
+  and provides a supervised feature selection method based on the kernel framwork 
+
+********************************************************************************
 mixKernel 0.4 [2020-02-20]
 New function:
   the ukfs function has been added. This function aims at selecting relevant 

@@ -1,7 +1,7 @@
 #############################################################################################################
 # Author :
 #   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Villa-Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
+#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
 #
 # Copyright (C) 2017
 #
@@ -21,15 +21,19 @@
 #############################################################################################################
 
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("ukfspy"))
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("kokfspy"))
 
-ukfs <- function(X, kernel.func=c("linear", "gaussian.radial.basis", "bray"),
-                 method=c("kernel", "kpca", "graph"),
-                 keepX=NULL, lambda=NULL, n_components=2, Lg=NULL,
-                 mu=1, max_iter=100, ...) {
-  
+select.features <- function(X, Y=NULL, kx.func=c("linear", "gaussian.radial.basis", "bray"),
+                            ky.func=c("linear", "gaussian.radial.basis"), keepX=NULL,
+                            method=c("kernel", "kpca", "graph"),
+                            lambda=NULL, n_components=2, Lg=NULL,
+                            mu=1, max_iter=100, nstep=50, ...) {
+
   source_python(file.path(system.file(package = "mixKernel"), "python", "ukfs.py"))
+  source_python(file.path(system.file(package = "mixKernel"), "python", "kokfs.py"))
   kernel.args <- list(...)
-  kernel.func <- match.arg(kernel.func)
+  kx.func <- match.arg(kx.func)
+  ky.func <- match.arg(ky.func)
   method <- match.arg(method)
   
   if (any(is.na(X))) {
@@ -70,13 +74,24 @@ ukfs <- function(X, kernel.func=c("linear", "gaussian.radial.basis", "bray"),
   if (!is.numeric(max_iter)) {
     stop("'max_iter' must be numeric")
   }
+  if (!is.numeric(nstep)) {
+    stop("'nstep' must be numeric")
+  }
 
-  # force X and Lg to be a matrix for numpy
+  # force X, Y and Lg to be a matrix for numpy
   X <- as.matrix(X)
+  if (!is.null(Y)) {
+    Y <- as.matrix(Y)
+  }
   if (!is.null(Lg)) {
   	Lg <- as.matrix(Lg)
   }
-  w <- ukfspy(X, kernel.func, method, keepX, lambda, n_components, Lg, mu, max_iter, kernel.args)
+
+  if (is.null(Y)) {
+    w <- ukfspy(X, kx.func, method, keepX, lambda, n_components, Lg, mu, max_iter, nstep, kernel.args)
+  } else {
+    w <- kokfspy(t(X), t(Y), kx.func, ky.func, keepX, nstep)
+  }
   return (w)
 
 }

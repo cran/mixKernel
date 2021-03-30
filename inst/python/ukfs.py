@@ -22,10 +22,56 @@
 
 
 import autograd
+import autograd.numpy as np
 from scipy.spatial.distance import pdist
 from scipy.optimize import minimize
 from scipy.linalg import eigh
-import autograd.numpy as np
+
+#### utility functions
+def euclidean_dist(x1, x2):
+    x1p2 = np.sum(np.square(x1), 1)
+    x2p2 = np.sum(np.square(x2), 1)
+    return x1p2.reshape((-1, 1)) + x2p2.reshape((1, -1)) - 2 * np.dot(x1, x2.T)
+####
+
+#### linear kernel functions
+def linear(x1, x2):
+    return np.dot(x1,np.transpose(x2))
+
+def linear_sel(w,x1,x2):
+    d=w.shape[0]
+    return linear(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2)
+####
+
+#### gaussian.radial.basis kernel functions
+def gaussian_radial_basis(x1, x2, sigma=1):
+    return np.exp(-sigma*euclidean_dist(x1,x2))
+
+def gaussian_radial_basis_sel(w, x1, x2, sigma=1):
+    d=w.shape[0]
+    return np.exp(-sigma*euclidean_dist(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2))
+####
+
+#### bray-curtis dissimilarity functions
+def bray(x1,x2):
+    eps=1
+    return np.sum(np.abs(x1[:,None,:]-x2[None,:,:]),2)/(np.sum((x1[:,None,:]+x2[None,:,:]),2)+eps) 
+
+def bray_sel(w,x1,x2):
+    d=w.shape[0]
+    return bray(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2)
+####
+
+#### bray-curtis kernel functions (for kpca)
+def brayK(x1,x2):
+    eps=0
+    diss=np.sum(np.abs(x1[:,None,:]-x2[None,:,:]),2)/(np.sum((x1[:,None,:]+x2[None,:,:]),2)+eps)
+    return -0.5 * np.dot(np.dot(np.identity(diss.shape[0]) - 1 / diss.shape[0], diss), np.identity(diss.shape[0]) - 1 / diss.shape[0]) 
+    
+def brayK_sel(w,x1,x2):
+    d=w.shape[0]
+    return brayK(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2)
+####
 
 #### optim functions
 def reg_l1(x, lambd=1, **kwargs):
@@ -209,11 +255,6 @@ def fmin_prox(f, df, g, prox_g, x0, lambd=1., backtrack=True, nbitermax=1000,
 ####
 
 #### utility functions
-def euclidean_dist(x1, x2):
-    x1p2 = np.sum(np.square(x1), 1)
-    x2p2 = np.sum(np.square(x2), 1)
-    return x1p2.reshape((-1, 1)) + x2p2.reshape((1, -1)) - 2 * np.dot(x1, x2.T)
-
 def kernel_dist(K):
     return np.asarray([[K[i,i]+K[j,j]-2*K[i,j] for j in range(0, K.shape[0])] for i in range(0, K.shape[0])])
 
@@ -255,57 +296,18 @@ def kpca_func(K, n_components=None):
     
     alphas = alphas / np.sqrt(lambdas)
     X_transformed = alphas * lambdas
-    print(lambdas)
-    print(alphas)
-    print(X_transformed)
     return (lambdas, alphas, X_transformed)
-####
-
-#### linear kernel functions
-def linear(x1, x2):
-    return np.dot(x1,np.transpose(x2))
-
-def linear_sel(w,x1,x2):
-    d=w.shape[0]
-    return linear(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2)
-####
-
-#### gaussian.radial.basis kernel functions
-def gaussian_radial_basis(x1, x2, sigma=1):
-    return np.exp(-sigma*euclidean_dist(x1,x2))
-
-def gaussian_radial_basis_sel(w, x1, x2, sigma=1):
-    d=w.shape[0]
-    return np.exp(-sigma*euclidean_dist(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2))
-####
-
-#### bray-curtis dissimilarity functions
-def bray(x1,x2):
-    eps=1
-    return np.sum(np.abs(x1[:,None,:]-x2[None,:,:]),2)/(np.sum((x1[:,None,:]+x2[None,:,:]),2)+eps) 
-
-def bray_sel(w,x1,x2):
-    d=w.shape[0]
-    return bray(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2)
-####
-
-#### bray-curtis kernel functions (for kpca)
-def brayK(x1,x2):
-    eps=0
-    diss=np.sum(np.abs(x1[:,None,:]-x2[None,:,:]),2)/(np.sum((x1[:,None,:]+x2[None,:,:]),2)+eps)
-    return -0.5 * np.dot(np.dot(np.identity(diss.shape[0]) - 1 / diss.shape[0], diss), np.identity(diss.shape[0]) - 1 / diss.shape[0]) 
-    
-def brayK_sel(w,x1,x2):
-    d=w.shape[0]
-    return brayK(np.reshape(w,(1,d))*x1,np.reshape(w,(1,d))*x2)
 ####
 
 #### main function
 which = lambda lst:list(np.where(lst)[0])
-def ukfspy(x, kernel_func, method, keepX, reg, n_components, Lg, mu, max_iter, kwargs):
+def ukfspy(x, kernel_func, method, keepX, reg, n_components, Lg, mu, max_iter, nstep, kwargs):
     
     # force x to be a numpy array
     x = np.array(x)
+    keepX = int(keepX)
+    nstep = int(nstep)
+    max_iter = int(max_iter)
     
     # optim parameters
     params=dict()
@@ -374,12 +376,13 @@ def ukfspy(x, kernel_func, method, keepX, reg, n_components, Lg, mu, max_iter, k
     prox_g=lambda x,lamb, **kw  : prox_l1(np.maximum(0,x),lamb,**kw)
     
     w0=np.ones(x.shape[1])
-    
+
     if keepX == None:
         w, log = fmin_prox(f, df, g, prox_g, w0, lambd=reg, **params)
     else:
         # warm restart until number of variables ok
-        for i, reg in enumerate([0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]):
+        val_regs =  np.logspace(-5, 2, num=nstep, endpoint=True, base=10.0)
+        for i, reg in enumerate(val_regs):
             neww, log = fmin_prox(f, df, g, prox_g, w0, lambd=reg, **params)
             if (len(which(neww>0)) <= keepX):
                 w = w0
@@ -387,6 +390,8 @@ def ukfspy(x, kernel_func, method, keepX, reg, n_components, Lg, mu, max_iter, k
             else:
                 w = neww
             w0 = neww
-    
-    return (w)
+    index = sorted(range(len(w)), key=lambda k: w[k], reverse=True)
+    if keepX is not None:
+        index = index[:keepX]
+    return (index)
 ####

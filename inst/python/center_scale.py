@@ -1,7 +1,8 @@
 #############################################################################################################
 # Author :
+#   Céline Brouard, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
 #   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
+#   Nathalie Villa-Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
 #
 # Copyright (C) 2017
 #
@@ -20,21 +21,15 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #############################################################################################################
 
-mixKernel.users.guide <- function(html = TRUE, view = html) {
-  if (html) {
-    f <- system.file("doc", "mixKernelUsersGuide.html", package = "mixKernel")
-    if (view) {
-      if (.Platform$OS.type == "windows")
-        shell.exec(f)
-      else browseURL(paste0("file://", f))
-    }
-  } else {
-    f <- system.file("doc", "mixKernelUsersGuide.Rmd", package = "mixKernel")
-    if (view) {
-      warning("'mixKernelUsersGuide.Rmd' can not be viewed.
-              However, the location of the file is returned by the function.",
-              call. = FALSE)
-    }
-  }
-  return(f)
-}
+
+import autograd.numpy as np
+
+
+#### utility functions
+def centerscalepy(x):
+    """center-scaling"""
+    num_gene,num_sample = x.shape
+    x_center = x - (np.tile(np.mean(x,axis=0),[num_gene,1]))
+    x_scale = x_center / (np.tile(np.std(x_center,axis=0),[num_gene,1]))
+    return x_scale
+####

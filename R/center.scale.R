@@ -20,44 +20,17 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #############################################################################################################
 
-compute.kernel <- function(X, kernel.func = "linear", ..., test.pos.semidef = FALSE) {
-  
-  #-- checking general input parameters --#
-  
-  kernel.args <- list(...)
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("centerscalepy"))
+
+center.scale <- function(X) {
+
+  source_python(file.path(system.file(package = "mixKernel"), "python", "center_scale.py"))
   
   if (any(is.na(X))) {
     stop("'X' should not contain NAs")
   }
-  if (is(kernel.func, "function")) {
-  	kernel.func <- deparse(substitute(kernel.func))
-  }
-  if (!is.logical(test.pos.semidef)) {
-    stop("test.pos.semidef must be either TRUE or FALSE")
-  }
-  
-  if (kernel.func == "kidentity") {
-    similarities <- X
-    colnames(similarities) <- rownames(similarities) <- rownames(X)
-    X <- NULL
-  } else {
-    all.kernel.args <- kernel.args
-    all.kernel.args$X <- X
-    similarities <- do.call(kernel.func, all.kernel.args) 
-    colnames(similarities) <- rownames(similarities) <- rownames(X)
-  }
-  
-  # test if the resulting matrix is symmetric and positive semidefinite
-  if (!is.kernel(similarities, test.pos.semidef)) {
-    stop("Kernel matrix has to be symmetric and positive semidefinite")
-  }
-  
-  cl <- match.call()
-  cl[[1]] <- as.name('compute.kernel')
-  result <- (list(call = cl, kernel = similarities, X = X,
-                  kernel.func = kernel.func, kernel.args = kernel.args))
-  class(result) <- c("kernel")
-  
-  return(invisible(result))
-  
+  # force X, Y and Lg to be a matrix for numpy
+  X <- as.matrix(X)
+  return (centerscalepy(X))
+
 }

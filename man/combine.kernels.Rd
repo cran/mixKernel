@@ -47,8 +47,8 @@ Kernel Learning (UMKL) method to use: \itemize{
 }
 
 \section{References}{
-Mariette J. and Villa-Vialaneix N. (2017). Integrating \emph{TARA} Oceans 
-datasets using unsupervised multiple kernel learning. \emph{Preprint}
+Mariette J. and Villa-Vialaneix N. (2018). Unsupervised multiple kernel learning for
+heterogeneous data integration . \emph{Bioinformatics}, \bold{34}(6), 1009-1015.
 }
 
 \author{Jerome Mariette <jerome.mariette@inrae.fr>

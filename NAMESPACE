@@ -31,7 +31,8 @@ kernel.pca.permute,
 kernel.pca,
 mixKernel.users.guide,
 plotVar.kernel.pca,
-ukfs
+select.features,
+center.scale
 )
 
 S3method(plot, kernel.pca)
