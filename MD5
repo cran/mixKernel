@@ -1,10 +1,10 @@
-fedf6447c770f390e7de4e4a6d43ed1d *DESCRIPTION
+2c2e2e06921a5d3cd5395595480606d8 *DESCRIPTION
 7e503e7e2dca53ac67bbc282ea060b4d *NAMESPACE
-ecdfe7b757f5a05b3911265b75ef1bb5 *NEWS
+b8d25fe54b11fa31b4c1f54418ce1738 *NEWS
 9bbb465542f16c606e40ac372d38ba24 *R/center.scale.R
-40d07a076190ca5f10ab3698f9ac93c4 *R/cim.kernel.R
-01b7f9cb6936af206f5caebd26ea138d *R/combine.kernels.R
-0a8bccafdc8c68cc4c2b4732b0212c5b *R/compute.kernel.R
+89b129b2d2d016b90b491a7c3522b411 *R/cim.kernel.R
+13ba079c37446b353e2c9c727b36e553 *R/combine.kernels.R
+2417c6982a285f284849a8075bd12fe4 *R/compute.kernel.R
 8153ad0fc26a3babbc57a79940aea80a *R/kernel.pca.R
 ab09496d37c12ccfdfc3772022883a1e *R/kernel.pca.permute.R
 d25f63e776e6309262344bfaa099ec52 *R/kernels.R
@@ -16,7 +16,6 @@ d9c90f20be97569e667ba5a40c962ce4 *R/user.guide.R
 8d4c54b766e6e40d41ea9b96a0fa2573 *data/TARAoceans.rda
 396fe9659ff9668691e31eb95afe6ea8 *data/datalist
 4f93675bce533ae3efc49fa9d3d2014b *inst/CITATION
-30d137d9951004f8d67fa947a0b9893a *inst/doc/mixKernelUsersGuide.Rmd
 72aeb24939d5ed8ae408c92e3cb16123 *inst/loaddata/Lg.rda
 0c5080e37904dc8e638603f86683b157 *inst/python/center_scale.py
 1b991295d14d5a5cecdf95043e732a60 *inst/python/kokfs.py

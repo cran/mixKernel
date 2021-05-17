@@ -1,4 +1,9 @@
 ********************************************************************************
+mixKernel 0.6 [2021-05-17]
+Fixed bugs:
+  improve mixKernel and SOMbrero compatibility
+
+********************************************************************************
 mixKernel 0.5 [2021-03-1]
 New function:
   the select.features function has been added. This function replace the ukfs function

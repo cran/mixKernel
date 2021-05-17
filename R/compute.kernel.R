@@ -56,7 +56,7 @@ compute.kernel <- function(X, kernel.func = "linear", ..., test.pos.semidef = FA
   cl[[1]] <- as.name('compute.kernel')
   result <- (list(call = cl, kernel = similarities, X = X,
                   kernel.func = kernel.func, kernel.args = kernel.args))
-  class(result) <- c("kernel")
+  class(result) <- c("kernel", "matrix", "array")
   
   return(invisible(result))
   

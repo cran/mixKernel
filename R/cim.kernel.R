@@ -41,8 +41,10 @@ cim.kernel <- function(..., scale = TRUE,
     stop("Each block of 'K' must have a unique name.")
   }
   # check all inputs are kernels
-  K.classes <- unique(unlist(lapply(K, class)))
-  if (length(K.classes) != 1 || K.classes[1] != "kernel") {
+  are.kernels <- unlist(lapply(K, function (k) {
+    "kernel" %in% class(k)
+  }))
+  if (!all(are.kernels)) {
     stop("Each block of 'K' must be a kernel.")
   }
   # check all kernels have been computed on the same number of observation

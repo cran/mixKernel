@@ -43,8 +43,10 @@ combine.kernels <- function(..., scale = TRUE,
   }
   
   # check all inputs are kernels
-  X.classes <- unique(unlist(lapply(X, class)))
-  if ( length(X.classes) != 1 || X.classes[1] != "kernel") {
+  are.kernels <- unlist(lapply(X, function (x) {
+    "kernel" %in% class(x)
+  }))
+  if (!all(are.kernels)) {
     stop("Each block of 'X' must be a kernel.")
   }
   # check all kernels have been computed on the same number of observation
