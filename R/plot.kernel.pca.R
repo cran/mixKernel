@@ -42,7 +42,7 @@ plot.kernel.pca <- function(x, ncomp = min(10, x$ncomp), ...) {
   	stop("'ncomp' must be lower or equal than ", length(x$sdev), ".", call. = FALSE)
   }
   
-  barplot(x$explained_variance[1:ncomp], names.arg = seq(1, ncomp), 
+  barplot(x$prop_expl_var$X[1:ncomp], names.arg = seq(1, ncomp), 
           xlab = "Principal Components", ylab = "Explained Variance", ...)
     
 }

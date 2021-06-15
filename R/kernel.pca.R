@@ -80,8 +80,8 @@ kernel.pca <- function(K, ncomp = nrow(K$kernel)) {
   # calcul explained variance
   # explX=explained_variance(X, result$variates$X, ncomp)
   # result$explained_variance=explX
-  result$explained_variance <- eigen.result$values / sum(eigen.result$values)
-  result$cum.var = cumsum(result$explained_variance)
+  result$prop_expl_var$X <- eigen.result$values / sum(eigen.result$values)
+  result$cum.var = cumsum(result$prop_expl_var$X)
   
   return(invisible(result))
 }
