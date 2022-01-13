@@ -20,7 +20,7 @@ center.scale(X)
      
 Jerome Mariette <jerome.mariette@inrae.fr>
 
-Nathalie Villa-Vialaneix <nathalie.villa-vialaneix@inrae.fr>}
+Nathalie Vialaneix <nathalie.vialaneix@inrae.fr>}
 
 \seealso{
 \code{\link{compute.kernel}}, \code{\link{combine.kernels}}

@@ -9,7 +9,7 @@ citEntry(
   author = as.person(meta$Author),
   year = year,
   note = vers,
-  textVersion = paste('Mariette J., Villa-Vialaneix N. (', year, ') mixKernel: ', meta$Title, '. ', vers, '.', sep = '')
+  textVersion = paste('Mariette J., Brouard C., Flamary R., Vialaneix N. (', year, ') mixKernel: ', meta$Title, '. ', vers, '.', sep = '')
 )
 
 citEntry(
@@ -24,4 +24,16 @@ citEntry(
   textVersion = paste('Mariette, J. and Villa-Vialaneix, N. (2017)',
                       'Unsupervised multiple kernel learning for heterogeneous data integration.',
                       'Bioinformatics, 34(6): 1009-1015.')
+)
+
+citEntry(
+  entry = 'article',
+  title = 'Feature selection for kernel methods in systems biology',
+  author = personList(as.person("Celine Brouard"), as.person("Jerome Mariette"), as.person("Remi Flamary"), as.person("Nathalie Vialaneix")),
+  journal = 'NAR Genomics and Bioinformatics',
+  year = 2022,
+  note = 'Forthcoming',
+  textVersion = paste('Brouard, C., Mariette, J., Flamary, R. and Vialaneix, N. (2022)',
+                      'Feature selection for kernel methods in systems biology.',
+                      'NAR Genomics and Bioinformatics. Forthcoming.')
 )

@@ -2,7 +2,7 @@
 # Author :
 #   Céline Brouard, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
 #   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Villa-Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
+#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
 #
 # Copyright (C) 2017
 #

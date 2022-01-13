@@ -1,7 +1,12 @@
 ********************************************************************************
+mixKernel 0.8 [2022-01-13]
+Documentation:
+  improved documentation and add installation instructions
+
+********************************************************************************
 mixKernel 0.7 [2021-06-15]
 Fixed bugs:
-  fix a compatibility bug of the PCA object reed by mixOmics
+  fix a compatibility bug of the PCA object read by mixOmics
 
 ********************************************************************************
 mixKernel 0.6 [2021-05-17]
@@ -9,7 +14,7 @@ Fixed bugs:
   improve mixKernel and SOMbrero compatibility
 
 ********************************************************************************
-mixKernel 0.5 [2021-03-1]
+mixKernel 0.5 [2021-03-01]
 New function:
   the select.features function has been added. This function replace the ukfs function
   and provides a supervised feature selection method based on the kernel framwork 

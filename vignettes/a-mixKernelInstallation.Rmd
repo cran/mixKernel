@@ -1,0 +1,49 @@
+---
+title: "Installation instruction for mixKernel"
+author: "Jérôme Mariette, Céline Brouard, Rémi Flamary and Nathalie Vialaneix"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: yes
+    code_folding: show
+    highlight: haddock
+    df_print: kable
+---
+
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Installation instruction}
+%\VignettePackage{mixKernel}
+-->
+
+This vignette provide installation for `mixKernel` instructions. 
+
+## Installation of python dependencies
+
+The following python modules are required for the functions performing 
+feature selection in `mixKernel`: autograd, scipy, sklearn, numpy
+
+```{python installModule, eval=FALSE}
+pip3 install autograd
+pip3 install scipy
+pip3 install sklearn
+pip3 install numpy
+```
+
+## Installation of Bioconductor dependencies
+
+Two Bioconductor packages are required for `mixKernel` installation: `mixOmics`
+and `phyloseq`:
+```{r installBioc, eval=FALSE}
+install.packages("BiocManager")
+BiocManager::install("mixOmics")
+BiocManager::install("phyloseq")
+```
+
+## mixKernel installation
+
+Finally the installation is completed with:
+```{r install, eval=FALSE}
+install.packages("mixKernel")
+```
+
