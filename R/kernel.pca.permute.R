@@ -1,26 +1,55 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
-
+#' Assess variable importance
+#' 
+#' Assess importance of variables on a given PC component by computing the 
+#' Crone-Crosby distance between original sample positions and sample positions 
+#' obtained by a random permutation of the variables.
+#'
+#' @details
+#' \code{plotVar.kernel.pca} produces a barplot for each block. The variables 
+#' for which the importance has been computed with 
+#' \code{\link{kernel.pca.permute}} are displayed. The representation is limited 
+#' to the \code{ndisplay} most important variables.
+#'
+#' @param kpca.result a kernel.pca object returned by the
+#' \code{\link{kernel.pca}} function.
+#' @param ncomp integer. Number of KPCA components used to compute the 
+#' importance. Default: \code{1}.
+#' @param ... list of character vectors. The parameter name must be the kernel 
+#' name to be considered for permutation of variables. Provided vectors length 
+#' has to be equal to the number of variables of the input dataset. A kernel is 
+#' performed on each unique variables values. Crone-Crosby distances are 
+#' computed on each KPCA performed on resulted kernels or meta-kernels and can 
+#' be displayed using the \code{\link{plotVar.kernel.pca}}.
+#' @param directory character. To limit computational burden, this argument 
+#' allows to store / read temporary computed kernels.
+#' 
+#' @return \code{kernel.pca.permute} returns a copy of the input 
+#' \code{kpca.result} results and add values in the three entries: 
+#' \code{cc.distances}, \code{cc.variables} and \code{cc.blocks}.
+#' 
+#' @author Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @references Mariette J. and Villa-Vialaneix N. (2018). Unsupervised multiple 
+#' kernel learning for heterogeneous data integration. \emph{Bioinformatics}, 
+#' \bold{34}(6), 1009-1015. DOI: \doi{10.1093/bioinformatics/btx682}
+#' 
+#' Crone L. and Crosby D. (1995). Statistical applications of a metric on 
+#' subspaces to satellite meteorology. \emph{Technometrics}, \bold{37}(3), 
+#' 324-328.
+#' @seealso \code{\link{compute.kernel}}, \code{\link{kernel.pca}}
+#' @export
+#' @examples
+#' data(TARAoceans)
+#' 
+#' # compute one kernel for the psychem dataset
+#' phychem.kernel <- compute.kernel(TARAoceans$phychem, kernel.func = "linear")
+#' # perform a KPCA
+#' kernel.pca.result <- kernel.pca(phychem.kernel)
+#' 
+#' # compute importance for all variables in this kernel
+#' kernel.pca.result <- kernel.pca.permute(kernel.pca.result, 
+#'                                         phychem = colnames(TARAoceans$phychem))
+#' 
 kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   
   #-- checking general input parameters --#

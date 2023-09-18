@@ -1,26 +1,35 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
-
+#' Kernel Principal Components Analysis
+#' 
+#' Performs a kernel PCA.
+#'
+#' @param K a kernel object obtained using either \code{compute.kernel} or
+#' \code{combine.kernels}.
+#' @param ncomp integer. Indicates the number of components to return..
+#' 
+#' @return \code{kernel.pca} returns an object of classes \code{"kernel.pca"} 
+#' and \code{"pca"}, which is a list containing the following entries: \itemize{
+#'   \item{ncomp}{: the number of principal components;}
+#'   \item{X}{: the input kernel matrix;} 
+#'   \item{kernel}{: the input kernel object provided by the user;}
+#'   \item{sdev}{: the singular values (square root of the eigenvalues);} 
+#'   \item{rotation}{: the matrix of variable loadings (\emph{i.e.}, a matrix 
+#'   whose columns contain the eigenvectors);}
+#'   \item{loadings}{: same as 'rotation' to keep the mixOmics spirit;}
+#'   \item{x}{: same as 'rotation' to keep the mixOmics spirit;}
+#' }
+#' 
+#' @author Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @references Scholkopf B., Smola A. and Muller K.R. (1998) Nonlinear component 
+#' analysis as a kernel eigenvalue problem. \emph{Neural Computation}, 
+#' \bold{10}, 1299-1319.
+#' @seealso \code{\link{compute.kernel}}, \code{\link{combine.kernels}}
+#' @export
+#' @examples
+#' data(TARAoceans)
+#' phychem.kernel <- compute.kernel(TARAoceans$phychem, kernel.func = "linear")
+#' kernel.pca.result <- kernel.pca(phychem.kernel, ncomp = 3)
+#' 
 kernel.pca <- function(K, ncomp = nrow(K$kernel)) {
   
   #-- checking general input parameters --#

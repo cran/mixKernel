@@ -23,8 +23,8 @@
 
 .onAttach <- function(libname, pkgname) {
   
-  packageStartupMessage("\nAny bug reports or comments? Notify us at jerome.mariette@inrae.fr",
-    " or https://forgemia.inra.fr/jerome.mariette/mixKernel/-/issues"
+  packageStartupMessage("\nAny bug reports or comments? Notify us at nathalie.vialaneix@inrae.fr",
+    " or https://forgemia.inra.fr/genotoul-bioinfo/mixKernel/-/issues"
   )
   
 }

@@ -1,25 +1,40 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
+#' Plot importance of variables in kernel PCA
+#' 
+#' Provides a representation of variable importance in kernel PCA.
+#'
+#' @details
+#' \code{plotVar.kernel.pca} produces a barplot for each block. The variables for which the 
+#' importance has been computed with \code{\link{kernel.pca.permute}} are 
+#' displayed. The representation is limited to the \code{ndisplay} most important 
+#' variables.
+#'
+#' @param object : a kernel.pca object returned by \code{\link{kernel.pca}}.
+#' @param blocks a numerical vector indicating the block variables to display.
+#' @param ndisplay integer. The number of important variables per blocks shown in 
+#' the representation. Default: \code{5}.
+#' @param ncol integer. Each block of variables is displayed in a separate 
+#' subfigure. \code{ncol} sets the number of columns for the global figure. 
+#' Default: \code{2}.
+#' @param ... external arguments.
+#' 
+#' @author Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @references Crone L. and Crosby D. (1995). Statistical applications of a metric on subspaces
+#' to satellite meteorology. \emph{Technometrics}, \bold{37}(3), 324-328.
+#' @seealso \code{\link{kernel.pca}}, \code{\link{kernel.pca.permute}}
+#' @export
+#' @examples
+#' data(TARAoceans)
+#' 
+#' # compute one kernel for the psychem dataset
+#' phychem.kernel <- compute.kernel(TARAoceans$phychem, kernel.func = "linear")
+#' # perform a KPCA
+#' kernel.pca.result <- kernel.pca(phychem.kernel)
+#' # compute importance for all variables in this kernel
+#' kernel.pca.result <- kernel.pca.permute(kernel.pca.result, phychem = colnames(TARAoceans$phychem))
+#' 
+#' \dontrun{plotVar.kernel.pca(kernel.pca.result, ndisplay = 10)}
+#' 
 plotVar.kernel.pca <- function(object, blocks = unique(object$cc.blocks), 
                                ndisplay = 5, ncol = 2, ...) {
   

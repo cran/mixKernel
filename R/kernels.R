@@ -188,7 +188,7 @@ phylogenetic <- function(X, method = c("wunifrac", "unifrac"),
   	stop("'phylogenetic.tree' is required when computing a 'phylogenetic' kernel.", 
   	     call. = FALSE)
   }
-  if (!class(phylogenetic.tree) == "phylo") {
+  if (!inherits(phylogenetic.tree, "phylo")) {
   	stop("'phylogenetic.tree' should be an instance of 'phylo-class' as defined",
   	     " in the ape-package.", call. = FALSE)
   }

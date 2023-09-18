@@ -1,39 +1,27 @@
-citHeader("To cite the 'mixKernel' package in publications, use:")
-
-year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
-vers = paste('R package version', meta$Version)
-
-citEntry(
-  entry = 'manual',
-  title = paste('mixKernel:', meta$Title),
-  author = as.person(meta$Author),
-  year = year,
-  note = vers,
-  textVersion = paste('Mariette J., Brouard C., Flamary R., Vialaneix N. (', year, ') mixKernel: ', meta$Title, '. ', vers, '.', sep = '')
+bibentry(
+  bibtype = "Article",
+  header = "To cite adjclust in publications, please use",
+  textVersion = "Mariette J. and Villa-Vialaneix N. (2017) Unsupervised multiple kernel learning for heterogeneous data integration. Bioinformatics, 34(6): 1009-1015.",
+  author = "Mariette, Jerome and Villa-Vialaneix, Nathalie",
+  title = "Unsupervised multiple kernel learning for heterogeneous data integration",
+  journal = "Bioinformatics",
+  year = "2018",
+  volume = "34",
+  issue = "6", 
+  pages = "1009-1015",
+  doi = "10.1093/bioinformatics/btx682"
 )
 
-citEntry(
-  entry = 'article',
-  title = 'Unsupervised multiple kernel learning for heterogeneous data integration',
-  author = personList(as.person("Jerome Mariette"), as.person("Nathalie Villa-Vialaneix")),
-  journal = 'Bioinformatics',
-  year = 2018,
-  volume = '34',
-  issue = '6',
-  pages = '1009-1015',
-  textVersion = paste('Mariette, J. and Villa-Vialaneix, N. (2017)',
-                      'Unsupervised multiple kernel learning for heterogeneous data integration.',
-                      'Bioinformatics, 34(6): 1009-1015.')
+bibentry(
+  bibtype = "Article",
+  textVersion = "Brouard C., Mariette J., Flamary R., Vialaneix, N. (2022) Feature selection for kernel methods in systems biology. NAR Genomics and Bioinformatics. 4(1).",
+  author = "Celine Brouard, Jerome Mariette, Remi Flamary and Nathalie Vialaneix",
+  title = "Feature selection for kernel methods in systems biology",
+  journal = "NAR Genomics and Bioinformatics",
+  year = "2022",
+  volume = "4",
+  issue = "1",
+  number = "lqac014",
+  doi = "10.1093/nargab/lqac014"
 )
 
-citEntry(
-  entry = 'article',
-  title = 'Feature selection for kernel methods in systems biology',
-  author = personList(as.person("Celine Brouard"), as.person("Jerome Mariette"), as.person("Remi Flamary"), as.person("Nathalie Vialaneix")),
-  journal = 'NAR Genomics and Bioinformatics',
-  year = 2022,
-  note = 'Forthcoming',
-  textVersion = paste('Brouard, C., Mariette, J., Flamary, R. and Vialaneix, N. (2022)',
-                      'Feature selection for kernel methods in systems biology.',
-                      'NAR Genomics and Bioinformatics. Forthcoming.')
-)

@@ -1,26 +1,56 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
-
+#' Compute and display similarities between multiple kernels
+#' 
+#' Compute cosine from Frobenius norm between kernels and display the 
+#' corresponding correlation plot.
+#'
+#' @details
+#' The displayed similarities are the kernel generalization of the 
+#' RV-coefficient described in Lavit \emph{et al.}, 1994.
+#' 
+#' The plot is displayed using the \code{\link[corrplot]{corrplot}} package. 
+#' Seven visualization methods are implemented: \code{"circle"} (default), 
+#' \code{"square"}, \code{"number"}, \code{"pie"}, \code{"shade"} and 
+#' \code{"color"}. Circle and square areas are proportional to the absolute 
+#' value of corresponding similarities coefficients.
+#'
+#' @param ... list of kernels (called 'blocks') computed on different datasets 
+#' and measured on the same samples.
+#' @param scale boleean. If \code{scale = TRUE}, each block is standardized to 
+#' zero mean and unit variance and cosine normalization is performed on the 
+#' kernel. Default: \code{TRUE}.
+#' @param method character. The visualization method to be used. Currently, 
+#' seven methods are supported (see Details).
+#' 
+#' @return \code{cim.kernel} returns a matrix containing the cosine from 
+#' Frobenius norm between kernels.
+#' 
+#' @author Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @references Lavit C., Escoufier Y., Sabatier R. and Traissac P. (1994). The 
+#' ACT (STATIS method). \emph{Computational Statistics and Data Analysis}, 
+#' \bold{18}(1), 97-119.
+#' 
+#' Mariette J. and Villa-Vialaneix N. (2018). Unsupervised multiple kernel 
+#' learning for heterogeneous data integration. \emph{Bioinformatics}, 
+#' \bold{34}(6), 1009-1015.
+#' @seealso \code{\link{compute.kernel}}
+#' @export
+#' @examples
+#' data(TARAoceans)
+#' 
+#' # compute one kernel per dataset
+#' phychem.kernel <- compute.kernel(TARAoceans$phychem, kernel.func = "linear")
+#' pro.phylo.kernel <- compute.kernel(TARAoceans$pro.phylo, 
+#'                                    kernel.func = "abundance")
+#' pro.NOGs.kernel <- compute.kernel(TARAoceans$pro.NOGs, 
+#'                                   kernel.func = "abundance")
+#' 
+#' # display similarities between kernels
+#' cim.kernel(phychem = phychem.kernel,
+#'            pro.phylo = pro.phylo.kernel,
+#'            pro.NOGs = pro.NOGs.kernel, 
+#'            method = "square")
+#' 
 cim.kernel <- function(..., scale = TRUE, 
                        method = c("circle", "square", "number", 
                                   "shade", "color", "pie")) {

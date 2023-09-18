@@ -1,27 +1,24 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("centerscalepy"))
-
+#' Center and scale
+#' 
+#' Center and scale a dataset.
+#'
+#' @param X a numeric matrix (or data frame) to center and scaled.
+#' \code{NA}s not allowed.
+#' 
+#' @return \code{center.scale} returns a centered and scaled matrix.
+#' 
+#' @author Celine Brouard <celine.brouard@@inrae.fr>
+#' Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @seealso \code{\link{compute.kernel}}, \code{\link{combine.kernels}}
+#' @export
+#' @examples
+#' data("nutrimouse")
+#' \dontrun{
+#'  nutrimouse.sc <- center.scale(nutrimouse$gene)
+#' }
+#' 
 center.scale <- function(X) {
 
   source_python(file.path(system.file(package = "mixKernel"), "python", "center_scale.py"))

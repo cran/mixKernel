@@ -1,25 +1,30 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
+#' View mixKernel User's Guide
+#' 
+#' Find the location of the mixKernel User's Guide and optionnaly opens it
+#'
+#' @param html logical. Should the document returned by the function be the
+#' compiled PDF or the Rmd source. Default to \code{TRUE}
+#' @param view logical. Should the document be opened using the default HTML
+#' viewer? Default to \code{html}. It has no effect if \code{html = FALSE}
+#' 
+#' @return Character string giving the file location. If \code{html = TRUE} and
+#' \code{view = TRUE}, the HTML document reader is started and the User's Guide
+#' is opened in it.
+#' 
+#' @details
+#' If the operating system is not Windows, then the HTML viewer used is that
+#' given by \code{Sys.getenv("R_BROWSER")}. The HTML viewer can be changed using
+#' \code{Sys.setenv(R_BROWSER = )}.
+#' 
+#' 
+#' @author Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @export
+#' @examples
+#' mixKernel.users.guide(view = FALSE)
+#' mixKernel.users.guide(html = FALSE)
+#' \dontrun{mixKernel.users.guide()}
+#' 
 mixKernel.users.guide <- function(html = TRUE, view = html) {
   if (html) {
     f <- system.file("doc", "mixKernelUsersGuide.html", package = "mixKernel")

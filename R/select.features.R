@@ -1,28 +1,74 @@
-#############################################################################################################
-# Author :
-#   Jerome Mariette, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#   Nathalie Vialaneix, MIAT, Universite de Toulouse, INRA 31326 Castanet-Tolosan France
-#
-# Copyright (C) 2017
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#############################################################################################################
-
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("ukfspy"))
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("kokfspy"))
-
+#' Select important features
+#' 
+#' Select features using supervised or unsupervised kernel method. A 
+#' supervised feature selection method is performed if \code{Y} is provided.
+#'
+#' @param X a numeric matrix (or data frame) used to select variables. 
+#' \code{NA}s not allowed.
+#' @param Y a numeric matrix (or data frame) used to select variables. 
+#' \code{NA}s not allowed.
+#' @param kx.func the kernel function name to use on \code{X}. Widely used 
+#' kernel functions are pre-implemented, and can be directly used by setting 
+#' \code{kx.func} to one of the following values: \code{"linear"}, 
+#' \code{"gaussian.radial.basis"} or \code{"bray"}. Default: \code{"linear"}. If 
+#' \code{Y} is provided, the kernel \code{"bray"} is not allowed.
+#' @param ky.func the kernel function name to use on \code{Y}. Available 
+#' kernels are: \code{"linear"}, and \code{"gaussian.radial.basis"}. Default: 
+#' \code{"linear"}. This value is ignored when \code{Y} is not provided.
+#' @param keepX the number of variables to select.
+#' @param method the method to use. Either an unsupervised variable selection
+#' method (\code{"kernel"}), a kernel PCA oriented variable selection method 
+#' (\code{"kpca"}) or a structure driven variable selection selection 
+#' (\code{"graph"}). Default: \code{"kernel"}.
+#' @param lambda the penalization parameter that controls the trade-off between 
+#' the minimization of the distorsion and the sparsity of the solution 
+#' parameter.
+#' @param n_components how many principal components should be used with method
+#' \code{"kpca"}. Required with method \code{"kpca"}. Default: \code{2}.
+#' @param Lg the Laplacian matrix of the graph representing relations between 
+#' the input dataset variables. Required with method \code{"graph"}.
+#' @param mu the penalization parameter that controls the trade-off between the
+#' the distorsion and the influence of the graph. Default: \code{1}.
+#' @param max_iter the maximum number of iterations. Default: \code{100}.
+#' @param nstep the number of values used for the regularization path. Default: 
+#' \code{50}. 
+#' @param ... the kernel function arguments. In particular, 
+#' \code{sigma}(\code{"gaussian.radial.basis"}): double. The inverse kernel 
+#' width used by \code{"gaussian.radial.basis"}.
+#' 
+#' @return \code{ukfs} returns a vector of sorted selected features indexes.
+#' 
+#' @author Celine Brouard <celine.brouard@@inrae.fr>
+#' Jerome Mariette <jerome.mariette@@inrae.fr>
+#' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
+#' @references Brouard C., Mariette J., Flamary R. and Vialaneix N. (2022). 
+#' Feature selection for kernel methods in systems biology. \emph{NAR Genomics
+#' and Bioinformatics}, \bold{4}(1), lqac014. DOI: \doi{10.1093/nargab/lqac014}.
+#' @seealso \code{\link{compute.kernel}}
+#' @export select.features
+#' @examples
+#' ## These examples require the installation of python modules
+#' ## See installation instruction at: http://mixkernel.clementine.wf
+#'
+#' data("Koren.16S")
+#' \dontrun{
+#'  sf.res <- select.features(Koren.16S$data.raw, kx.func = "bray", lambda = 1,
+#'                            keepX = 40, nstep = 1)
+#'  colnames(Koren.16S$data.raw)[sf.res]
+#' }
+#'
+#' data("nutrimouse")
+#' \dontrun{
+#'  grb.func <- "gaussian.radial.basis"
+#'  genes <- center.scale(nutrimouse$gene)
+#'  lipids <- center.scale(nutrimouse$lipid)
+#'  sf.res <- select.features(genes, lipids, kx.func = grb.func, 
+#'                            ky.func = grb.func, keepX = 40)
+#'  colnames(nutrimouse$gene)[sf.res]
+#' }
+#' 
 select.features <- function(X, Y=NULL, kx.func=c("linear", "gaussian.radial.basis", "bray"),
                             ky.func=c("linear", "gaussian.radial.basis"), keepX=NULL,
                             method=c("kernel", "kpca", "graph"),
