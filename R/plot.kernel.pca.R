@@ -23,13 +23,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #############################################################################################################
-
+#' @export
 
 plot.kernel.pca <- function(x, ncomp = min(10, x$ncomp), ...) {
     
   #-- checking general input parameters --#
 
-  if (!"kernel.pca" %in% class(x)) {
+  if (!inherits(x, "kernel.pca")) {
   	stop("'x' should be an instance of 'kernel.pca' object returned by the",
   	     " kernel.pca function.", call. = FALSE)
   }
@@ -46,5 +46,3 @@ plot.kernel.pca <- function(x, ncomp = min(10, x$ncomp), ...) {
           xlab = "Principal Components", ylab = "Explained Variance", ...)
     
 }
-
-

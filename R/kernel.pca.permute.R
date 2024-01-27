@@ -57,7 +57,7 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   permutations <- list(...)
   blocks <- names(permutations)
   
-  if (!"kernel.pca" %in% class(kpca.result)) {
+  if (!inherits(kpca.result, "kernel.pca")) {
     stop(paste0("'kpca.result' should be an instance of 'kernel.pca' object", 
                 " returned by the kernel.pca function."), call. = FALSE)
   }
@@ -68,10 +68,10 @@ kernel.pca.permute = function(kpca.result, ncomp = 1, ..., directory = NULL) {
   }
   
   # it the kpca has been performed on a meta kernel
-  is.metakernel <- "metaKernel" %in% class(kpca.result$kernel)
+  is.metakernel <- inherits(kpca.result$kernel, "metaKernel")
 
   if (is.metakernel) {
-    # test if there is no kidentity kernels, i.e. kernel with X = NULL
+    # test if there is no identity kernels, i.e. kernel with X = NULL
     sapply(blocks, function(b.label) {
       if (is.null(kpca.result$kernel$X[[b.label]]$X)) {
         stop(paste0("No permutation can be done on block '", b.label, 

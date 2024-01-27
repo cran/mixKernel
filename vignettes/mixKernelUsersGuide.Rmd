@@ -8,13 +8,11 @@ output:
     code_folding: show
     highlight: haddock
     df_print: kable
+vignette: >
+  %\VignetteIndexEntry{Integrative exploratory analysis with mixKernel}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!--
-%\VignetteEngine{knitr}
-%\VignetteIndexEntry{Integrative exploratory analysis with mixKernel}
-%\VignettePackage{mixKernel}
--->
 
 # Introduction
 

@@ -14,7 +14,7 @@ kernel.pca(K, ncomp = nrow(K$kernel))
 }
 \value{
 \code{kernel.pca} returns an object of classes \code{"kernel.pca"} 
-and \code{"pca"}, which is a list containing the following entries: \itemize{
+and \code{"pca"}, which is a list containing the following entries: 
   \item{ncomp}{: the number of principal components;}
   \item{X}{: the input kernel matrix;} 
   \item{kernel}{: the input kernel object provided by the user;}
@@ -23,7 +23,6 @@ and \code{"pca"}, which is a list containing the following entries: \itemize{
   whose columns contain the eigenvectors);}
   \item{loadings}{: same as 'rotation' to keep the mixOmics spirit;}
   \item{x}{: same as 'rotation' to keep the mixOmics spirit;}
-}
 }
 \description{
 Performs a kernel PCA.

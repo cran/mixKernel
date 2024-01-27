@@ -11,8 +11,7 @@
 #' \code{"gaussian.radial.basis"}, \code{"poisson"} or \code{"phylogenetic"}. 
 #' Default: \code{"linear"}.
 #' @param ... the kernel function arguments. Valid parameters for 
-#' pre-implemented kernels are: 
-#'   \itemize{
+#' pre-implemented kernels are: \itemize{
 #'     \item \code{phylogenetic.tree} (\code{"phylogenetic"}): an instance of 
 #'     phylo-class that contains a phylogenetic tree (required).
 #'     \item \code{scale} (\code{"linear"} or \code{"gaussian.radial.basis"}): 
@@ -30,7 +29,8 @@
 #'     \code{"cao"}.
 #'     \item \code{normalization} (\code{"poisson"}): character. Can be 
 #'     \code{"deseq"} (more robust), \code{"mle"} (less robust) or 
-#'     \code{"quantile"}.}
+#'     \code{"quantile"}.
+#' }
 #' @param test.pos.semidef boleean. If \code{test.pos.semidef = TRUE}, the 
 #' positive semidefiniteness of the resulting matrix is checked.
 #' 

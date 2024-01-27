@@ -31,15 +31,14 @@ local topology of the datasets from each kernel. Default: \code{5}.}
 \code{20}.}
 }
 \value{
-\code{combine.kernels} returns an object of classes \code{"kernel"} and 
-\code{"metaKernel"}, a list that contains the following components: \itemize{
+\code{combine.kernels} returns an object of classes \code{"kernel"} 
+and \code{"metaKernel"}, a list that contains the following components: 
   \item{kernel}{: the computed meta-kernel matrix;}
   \item{X}{: the dataset from which the kernel has been computed, as given by
   the function \code{\link{compute.kernel}}. Can be \code{NULL} if a kernel
   matrix was passed to this function;}
   \item{weights}{: a vector containing the weights used to combine the 
-  kernels.} 
-}
+  kernels.}
 }
 \description{
 Compute multiple kernels into a single meta-kernel
@@ -47,13 +46,14 @@ Compute multiple kernels into a single meta-kernel
 \details{
 The arguments \code{method} allows to specify the Unsupervised Multiple
 Kernel Learning (UMKL) method to use: \itemize{
-  \item{\code{"STATIS-UMKL"}}{: combines input kernels into the best 
-  consensus of all kernels;}
-  \item \code{"full-UMKL"}{: computes a kernel that minimizes the distortion 
+  \item \code{"STATIS-UMKL"}: combines input kernels into the best 
+  consensus of all kernels;
+  \item \code{"full-UMKL"}: computes a kernel that minimizes the distortion 
   between the meta-kernel and the k-NN graphs obtained from all input 
-  kernels;}
-  \item \code{"sparse-UMKL"}{: a sparse variant of the \code{"full-UMKL"} 
-  approach.}}
+  kernels;
+  \item \code{"sparse-UMKL"}: a sparse variant of the \code{"full-UMKL"} 
+  approach.
+}
 }
 \examples{
 data(TARAoceans)

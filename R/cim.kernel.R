@@ -71,8 +71,8 @@ cim.kernel <- function(..., scale = TRUE,
     stop("Each block of 'K' must have a unique name.")
   }
   # check all inputs are kernels
-  are.kernels <- unlist(lapply(K, function (k) {
-    "kernel" %in% class(k)
+  are.kernels <- unlist(lapply(K, function(k) {
+    inherits(k, "kernel")
   }))
   if (!all(are.kernels)) {
     stop("Each block of 'K' must be a kernel.")

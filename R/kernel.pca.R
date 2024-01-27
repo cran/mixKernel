@@ -7,7 +7,7 @@
 #' @param ncomp integer. Indicates the number of components to return..
 #' 
 #' @return \code{kernel.pca} returns an object of classes \code{"kernel.pca"} 
-#' and \code{"pca"}, which is a list containing the following entries: \itemize{
+#' and \code{"pca"}, which is a list containing the following entries: 
 #'   \item{ncomp}{: the number of principal components;}
 #'   \item{X}{: the input kernel matrix;} 
 #'   \item{kernel}{: the input kernel object provided by the user;}
@@ -16,7 +16,6 @@
 #'   whose columns contain the eigenvectors);}
 #'   \item{loadings}{: same as 'rotation' to keep the mixOmics spirit;}
 #'   \item{x}{: same as 'rotation' to keep the mixOmics spirit;}
-#' }
 #' 
 #' @author Jerome Mariette <jerome.mariette@@inrae.fr>
 #' Nathalie Vialaneix <nathalie.vialaneix@@inrae.fr>
@@ -33,7 +32,7 @@
 kernel.pca <- function(K, ncomp = nrow(K$kernel)) {
   
   #-- checking general input parameters --#
-  if (!"kernel" %in% class(K)) {
+  if (!inherits(K, "kernel")) {
     stop("'K' should be an instance of class 'kernel'.", call. = FALSE)
   }
   

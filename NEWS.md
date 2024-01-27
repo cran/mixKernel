@@ -1,3 +1,9 @@
+# Version 0.9-1 [2024-01-27]
+
+* fixed CRAN checks (vignettes and documentation formats)
+* properly defined tests of classes with inherits
+* fixed a bug in exports
+
 # Version 0.9 [2023-09-08]
 
 * transition to roxygen documentation and fixing the format of some files 

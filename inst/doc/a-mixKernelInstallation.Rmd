@@ -8,13 +8,12 @@ output:
     code_folding: show
     highlight: haddock
     df_print: kable
+vignette: >
+  %\VignetteIndexEntry{Installation instruction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-<!--
-%\VignetteEngine{knitr}
-%\VignetteIndexEntry{Installation instruction}
-%\VignettePackage{mixKernel}
--->
 
 This vignette provide installation for `mixKernel` instructions. 
 
