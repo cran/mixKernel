@@ -49,10 +49,9 @@ plotIndiv(kernel.pca.result,
           ind.names = FALSE,
           legend = TRUE,
           group = as.vector(TARAoceans$sample$ocean),
-          col.per.group = c("#f99943", "#44a7c4", "#05b052", "#2f6395", 
-                            "#bb5352", "#87c242", "#07080a", "#92bbdb"),
-          pch = depth.pch,
-          pch.levels = TARAoceans$sample$depth,
+          col = c("#f99943", "#44a7c4", "#05b052", "#2f6395", "#bb5352", 
+                  "#87c242", "#07080a", "#92bbdb"),
+          pch = TARAoceans$sample$depth,
           legend.title = "Ocean / Sea",
           title = "Projection of TARA Oceans stations",
           size.title = 10,
@@ -86,8 +85,7 @@ plotIndiv(kernel.pca.result,
           ind.names = FALSE,
           legend = FALSE,
           col = col.proteo,
-          pch = depth.pch,
-          pch.levels = TARAoceans$sample$depth,
+          pch = TARAoceans$sample$depth,
           legend.title = "Ocean / Sea",
           title = "Representation of Proteobacteria abundance",
           legend.title.pch = "Depth")
@@ -100,8 +98,7 @@ plotIndiv(kernel.pca.result,
           ind.names = FALSE,
           legend = FALSE,
           col = col.temp,
-          pch = depth.pch,
-          pch.levels = TARAoceans$sample$depth,
+          pch = TARAoceans$sample$depth,
           legend.title = "Ocean / Sea",
           title = "Representation of mean temperature",
           legend.title.pch = "Depth")
@@ -121,18 +118,18 @@ if (have_depend) {
 }
 
 ## ----comput_correlation_graph, eval=FALSE-------------------------------------
-#  library("MASS")
-#  library("igraph")
-#  library("correlationtree")
-#  
-#  pro.phylo.alist <- data.frame("names" = colnames(TARAoceans$pro.phylo),
-#                                t(TARAoceans$pro.phylo))
-#  L <- mat2list(df2mat(pro.phylo.alist, 1))
-#  corr.mat <- as.matrix(cross_cor(L, remove = TRUE))
-#  pro.phylo.graph <- graph_from_adjacency_matrix(corr.mat,
-#                                                 mode = "undirected",
-#                                                 weighted = TRUE)
-#  Lg <- laplacian_matrix(pro.phylo.graph, sparse=TRUE)
+# library("MASS")
+# library("igraph")
+# library("correlationtree")
+# 
+# pro.phylo.alist <- data.frame("names" = colnames(TARAoceans$pro.phylo),
+#                               t(TARAoceans$pro.phylo))
+# L <- mat2list(df2mat(pro.phylo.alist, 1))
+# corr.mat <- as.matrix(cross_cor(L, remove = TRUE))
+# pro.phylo.graph <- graph_from_adjacency_matrix(corr.mat,
+#                                                mode = "undirected",
+#                                                weighted = TRUE)
+# Lg <- laplacian_matrix(pro.phylo.graph, sparse=TRUE)
 
 ## ----select_ukfsg-------------------------------------------------------------
 if (have_depend) {

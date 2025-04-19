@@ -1,4 +1,4 @@
-a3f87cd9648d6568dd1a849d0370bd66 *DESCRIPTION
+90b54343bffdbc27fcd8240e232c4fca *DESCRIPTION
 2d43de382cca9377103dcbee1064a0f1 *NAMESPACE
 cf0638df137da4751fe5e82f5f6269ff *NEWS.md
 ca5deb4b22064a1b5fbf751801db14b5 *R/TARAoceans.R
@@ -15,17 +15,17 @@ df966fa28e70e11fe2519f35203cbb76 *R/mixKernel-package.R
 9db8513a51facb32375405cc8b931964 *R/select.features.R
 6be359b27f99aa36545f81793872cbf3 *R/user.guide.R
 436b14805b43bca68ab4d204bad341fa *R/zzz.R
-8faf250d78a120ba4c7ea2186efddd24 *build/partial.rdb
-adb0321cd596aafd3d63f5f68bc3a224 *build/vignette.rds
+b52aabe9a2757fc86742763db9dafc9b *build/partial.rdb
+95b8f068439da384ee0cda6f73f6f6e8 *build/vignette.rds
 8d4c54b766e6e40d41ea9b96a0fa2573 *data/TARAoceans.rda
 396fe9659ff9668691e31eb95afe6ea8 *data/datalist
 aa7169d16916bbee84a84b6a4e0a616a *inst/CITATION
-2e551e1d650d698cb81a0843418ff7b2 *inst/doc/a-mixKernelInstallation.R
+ae100661074dd7f259c39108458c0ef1 *inst/doc/a-mixKernelInstallation.R
 6d43c0162867c62e9134755928594bba *inst/doc/a-mixKernelInstallation.Rmd
-e45417a247d8f3a63223e30684601e1a *inst/doc/a-mixKernelInstallation.html
-8b150de072d63ff902696e5e2127e568 *inst/doc/mixKernelUsersGuide.R
-b9084c98f18184e5a8d3ede5af8bf9e9 *inst/doc/mixKernelUsersGuide.Rmd
-89fd1179ea58359f7ac33e3ed8291cff *inst/doc/mixKernelUsersGuide.html
+73054eb70358723e08e17c28de5de9cb *inst/doc/a-mixKernelInstallation.html
+cc531e4f916cdce36b236ee0d8651bd6 *inst/doc/mixKernelUsersGuide.R
+2e50c929499526cd4d4a05463863c948 *inst/doc/mixKernelUsersGuide.Rmd
+636992d232bced72f2ec3e1280b68849 *inst/doc/mixKernelUsersGuide.html
 72aeb24939d5ed8ae408c92e3cb16123 *inst/loaddata/Lg.rda
 9db00af7fddf86e15f3bb71beb0f0631 *inst/python/center_scale.py
 c1983f99478e3988798e89ff05a73d9a *inst/python/kokfs.py
@@ -41,4 +41,4 @@ d3e53114865915416d0d6f265ae0fd94 *man/mixKernel.users.guide.Rd
 ab0a58bb315f0224001a68f14c661a00 *man/plotVar.kernel.pca.Rd
 5284b32abe9ac1fa90ca16d9bf64d223 *man/select.features.Rd
 6d43c0162867c62e9134755928594bba *vignettes/a-mixKernelInstallation.Rmd
-b9084c98f18184e5a8d3ede5af8bf9e9 *vignettes/mixKernelUsersGuide.Rmd
+2e50c929499526cd4d4a05463863c948 *vignettes/mixKernelUsersGuide.Rmd

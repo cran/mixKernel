@@ -1,8 +1,8 @@
 Package: mixKernel
 Type: Package
 Title: Omics Data Integration Using Kernel Methods
-Version: 0.9-1
-Date: 2024-01-27
+Version: 0.9-2
+Date: 2025-04-19
 Depends: R (>= 3.5.0), mixOmics, ggplot2, reticulate (>= 1.14)
 Imports: vegan, phyloseq, corrplot, psych, quadprog, LDRTools, Matrix,
         methods, markdown
@@ -36,10 +36,10 @@ Config/reticulate: list( packages = list( list(package = "autograd",
         = "scipy", pip = TRUE), list(package = "sklearn", pip = TRUE) )
         )
 RoxygenNote: 7.3.0
-Packaged: 2024-01-27 13:58:14 UTC; nathalie
+Packaged: 2025-04-19 08:25:35 UTC; nathalie
 Author: Nathalie Vialaneix [aut, cre],
   Celine Brouard [aut],
   Remi Flamary [aut],
   Julien Henry [aut],
   Jerome Mariette [aut]
-Date/Publication: 2024-01-27 14:20:02 UTC
+Date/Publication: 2025-04-19 09:10:02 UTC
